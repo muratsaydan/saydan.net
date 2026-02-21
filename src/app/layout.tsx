@@ -16,16 +16,16 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Saydan.net — Kişisel Marka Merkezi",
-    template: "%s | Saydan.net",
+    default: "Murat Saydan — Yazılım Mimarı & Lojistik Teknolojileri Uzmanı",
+    template: "%s | Murat Saydan",
   },
   description:
-    "Yazılım & Lojistik alanında kişisel marka merkezi. Projeler, makaleler ve daha fazlası.",
+    "25+ yıl deneyimli Yazılım Mimarı & BT Direktörü. Yazılım Proje Yönetimi, SaaS Geliştirme ve Lojistik Teknolojileri Danışmanlığı.",
   metadataBase: new URL("https://saydan.net"),
   openGraph: {
-    title: "Saydan.net — Kişisel Marka Merkezi",
+    title: "Murat Saydan — Yazılım Mimarı & Lojistik Teknolojileri Uzmanı",
     description:
-      "Yazılım & Lojistik alanında kişisel marka merkezi. Projeler, makaleler ve daha fazlası.",
+      "25+ yıl deneyimli Yazılım Mimarı & BT Direktörü. Yazılım Proje Yönetimi, SaaS Geliştirme ve Lojistik Teknolojileri Danışmanlığı.",
     url: "https://saydan.net",
     siteName: "Saydan.net",
     locale: "tr_TR",
