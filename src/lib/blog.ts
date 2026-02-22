@@ -7,6 +7,7 @@ export interface BlogPost {
   date: string;
   summary: string;
   tags: string[];
+  thumbnail: string;
   content: string;
 }
 
@@ -54,6 +55,7 @@ function parseFile(file: string): BlogPost | null {
     date: (metadata.date as string) || "",
     summary: (metadata.summary as string) || "",
     tags: (metadata.tags as string[]) || [],
+    thumbnail: (metadata.thumbnail as string) || "",
     content,
   };
 }
