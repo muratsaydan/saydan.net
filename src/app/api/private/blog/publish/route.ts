@@ -3,6 +3,7 @@ import { ALLOWED_EMAILS } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import fs from "fs";
 import path from "path";
+import sharp from "sharp";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
@@ -65,12 +66,15 @@ ${scriptLine}---
     const htmlPath = path.join(postDir, `${slug}.html`);
     fs.writeFileSync(htmlPath, frontmatter + transformedHtml, "utf-8");
 
-    // Save thumbnail
+    // Save thumbnail (optimized)
     if (thumbnail && thumbnail.size > 0) {
-      const ext = path.extname(thumbnail.name) || ".jpg";
-      const thumbPath = path.join(postDir, `anaresim${ext}`);
-      const buffer = Buffer.from(await thumbnail.arrayBuffer());
-      fs.writeFileSync(thumbPath, buffer);
+      const thumbPath = path.join(postDir, "anaresim.jpg");
+      const rawBuffer = Buffer.from(await thumbnail.arrayBuffer());
+      const optimized = await sharp(rawBuffer)
+        .resize({ width: 1200, withoutEnlargement: true })
+        .jpeg({ quality: 80 })
+        .toBuffer();
+      fs.writeFileSync(thumbPath, optimized);
     }
 
     // Save knowledge base
