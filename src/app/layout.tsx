@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
+import ChatWidget from "@/components/ChatWidget";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -48,6 +49,7 @@ export default function RootLayout({
           <Navbar />
           <main className="mx-auto w-full max-w-6xl px-6">{children}</main>
           <Footer />
+          <ChatWidget />
         </AuthProvider>
       </body>
     </html>
