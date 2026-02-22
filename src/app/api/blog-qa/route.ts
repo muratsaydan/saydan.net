@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { getKnowledgeBase } from "@/lib/blog";
+import { gitAutoSync } from "@/lib/gitSync";
 import fs from "fs";
 import path from "path";
 
@@ -134,6 +135,11 @@ ${knowledgeBase}${historyContext}`;
         const entries = loadQA(slug);
         entries.push(newEntry);
         saveQA(slug, entries);
+
+        gitAutoSync(
+          [`content/blog/${slug}/qa.json`],
+          `blog: yeni soru-cevap — ${slug}`
+        ).catch(() => {});
 
         controller.enqueue(
           encoder.encode(`\n<!--QA_ID:${entryId}-->`)

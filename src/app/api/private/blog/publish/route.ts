@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { ALLOWED_EMAILS } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { gitAutoSync } from "@/lib/gitSync";
 import fs from "fs";
 import path from "path";
 import sharp from "sharp";
@@ -157,6 +158,11 @@ ${scriptLine}---
     } catch {
       // revalidation may fail in dev, ignore
     }
+
+    gitAutoSync(
+      [`content/blog/${slug}`],
+      `blog: yeni makale — ${title}`
+    ).catch(() => {});
 
     return Response.json({ success: true, slug });
   } catch (e) {

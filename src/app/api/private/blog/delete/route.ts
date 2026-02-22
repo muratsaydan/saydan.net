@@ -1,5 +1,6 @@
 import { auth, ALLOWED_EMAILS } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { gitAutoSync } from "@/lib/gitSync";
 import fs from "fs";
 import path from "path";
 
@@ -41,6 +42,11 @@ export async function DELETE(req: Request) {
   } catch {
     // revalidation may fail in dev
   }
+
+  gitAutoSync(
+    [`content/blog/${sanitized}`, `content/blog/${sanitized}.html`],
+    `blog: makale silindi — ${sanitized}`
+  ).catch(() => {});
 
   return Response.json({ success: true });
 }
