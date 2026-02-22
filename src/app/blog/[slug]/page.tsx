@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
+import RichBlogContent from "@/components/RichBlogContent";
+import BlogQA from "@/components/BlogQA";
 
 type Params = Promise<{ slug: string }>;
 
@@ -34,7 +36,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
 
   return (
     <article className="py-16 md:py-24">
-      <div className="mx-auto max-w-3xl">
+      <div className={post.isRichHtml ? "mx-auto max-w-5xl" : "mx-auto max-w-3xl"}>
         <Link
           href="/blog"
           className="inline-flex items-center gap-1 text-sm text-muted transition-colors hover:text-primary"
@@ -78,10 +80,22 @@ export default async function BlogPostPage({ params }: { params: Params }) {
 
         <hr className="my-8 border-border dark:border-border-dark" />
 
-        <div
-          className="prose prose-gray max-w-none dark:prose-invert prose-headings:font-semibold prose-headings:tracking-tight prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4 prose-p:leading-relaxed prose-p:text-muted prose-li:text-muted prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:rounded prose-code:bg-primary/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary prose-code:before:content-none prose-code:after:content-none"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        {post.isRichHtml && post.richData ? (
+          <RichBlogContent
+            bodyContent={post.richData.bodyContent}
+            styles={post.richData.styles}
+            inlineScript={post.richData.inlineScript}
+            externalScripts={post.richData.externalScripts}
+            fontLinks={post.richData.fontLinks}
+          />
+        ) : (
+          <div
+            className="prose prose-gray max-w-none dark:prose-invert prose-headings:font-semibold prose-headings:tracking-tight prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4 prose-p:leading-relaxed prose-p:text-muted prose-li:text-muted prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:rounded prose-code:bg-primary/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary prose-code:before:content-none prose-code:after:content-none"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
+        )}
+
+        {post.knowledgeBase && <BlogQA slug={post.slug} />}
 
         <hr className="my-12 border-border dark:border-border-dark" />
 
