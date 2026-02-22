@@ -263,12 +263,6 @@ export default function NewBlogPage() {
         ))}
       </div>
 
-      {error && (
-        <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
-          {error}
-        </div>
-      )}
-
       {/* STEP 1: Upload */}
       {step === 1 && (
         <div className="space-y-6">
@@ -354,6 +348,11 @@ export default function NewBlogPage() {
               </>
             )}
           </button>
+          {error && step === 1 && (
+            <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
+              {error}
+            </div>
+          )}
         </div>
       )}
 
@@ -460,6 +459,11 @@ export default function NewBlogPage() {
               </svg>
             </button>
           </div>
+          {error && step === 2 && (
+            <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
+              {error}
+            </div>
+          )}
         </div>
       )}
 
@@ -526,6 +530,11 @@ export default function NewBlogPage() {
               )}
             </button>
           </div>
+          {error && step === 3 && (
+            <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
+              {error}
+            </div>
+          )}
         </div>
       )}
 
