@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
+import { auth, ALLOWED_EMAILS } from "@/lib/auth";
 import RichBlogContent from "@/components/RichBlogContent";
 import BlogQA from "@/components/BlogQA";
+import BlogDeleteButton from "@/components/BlogDeleteButton";
 
 type Params = Promise<{ slug: string }>;
 
@@ -37,6 +39,9 @@ export default async function BlogPostPage({ params }: { params: Params }) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) notFound();
+
+  const session = await auth();
+  const isAdmin = ALLOWED_EMAILS.includes(session?.user?.email ?? "");
 
   const hasScripts = post.externalScripts.length > 0 ||
     post.content.includes("data-blog-script");
@@ -134,6 +139,12 @@ export default async function BlogPostPage({ params }: { params: Params }) {
           </svg>
           Tüm yazılara dön
         </Link>
+
+        {isAdmin && (
+          <div className="mt-8">
+            <BlogDeleteButton slug={post.slug} />
+          </div>
+        )}
       </div>
     </article>
   );
