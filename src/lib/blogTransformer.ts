@@ -155,6 +155,13 @@ function extractExternalScripts(html: string): string[] {
   return scripts;
 }
 
+function removePageChrome(html: string): string {
+  html = html.replace(/<nav[\s>][\s\S]*?<\/nav>/gi, "");
+  html = html.replace(/<header[\s>][\s\S]*?<\/header>/gi, "");
+  html = html.replace(/<footer[\s>][\s\S]*?<\/footer>/gi, "");
+  return html;
+}
+
 function removeAiConsultantSection(html: string): string {
   html = html.replace(
     /<section[^>]*class="[^"]*ai-consultant-box[^"]*"[^>]*>[\s\S]*?<\/section>/gi,
@@ -202,6 +209,9 @@ export function transformHtml(rawHtml: string): TransformResult {
   }
   body = body.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "");
 
+  // Remove page-level chrome (nav, header, footer)
+  body = removePageChrome(body);
+
   // Remove AI consultant section
   body = removeAiConsultantSection(body);
   inlineScript = removeAiScriptCode(inlineScript);
@@ -211,6 +221,11 @@ export function transformHtml(rawHtml: string): TransformResult {
   styles = applyColorMap(styles);
   styles = cleanFonts(styles);
   styles = softenGlows(styles);
+
+  // Remove CSS rules targeting removed page chrome
+  styles = styles.replace(/nav[\s.#\[{][^{}]*\{[^}]*\}/gi, "");
+  styles = styles.replace(/header[\s.#\[{][^{}]*\{[^}]*\}/gi, "");
+  styles = styles.replace(/footer[\s.#\[{][^{}]*\{[^}]*\}/gi, "");
 
   // Scope global selectors to .blog-article container
   styles = styles.replace(/\b:root\b/g, ".blog-article");
