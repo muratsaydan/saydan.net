@@ -6,46 +6,57 @@ export interface TransformResult {
 }
 
 const HEX_MAP: [RegExp, string][] = [
-  [/#22c55e/gi, "#0f766e"],
+  [/#22c55e/gi, "#14b8a6"],
   [/#f97316/gi, "#f59e0b"],
-  [/#0a2f29/gi, "#f8fafc"],
-  [/#113a33/gi, "#ffffff"],
+  [/#0a2f29/gi, "#111827"],
+  [/#113a33/gi, "#1f2937"],
   [/#ecfdf5/gi, "#1f2937"],
-  [/#1a1a2e/gi, "#f8fafc"],
+  [/#1a1a2e/gi, "#111827"],
+  [/#f8fafc/gi, "#111827"],
+  [/#ffffff/gi, "#1f2937"],
+  [/#1f2937/gi, "#1f2937"],
 ];
 
 const RGBA_MAP: [RegExp, string][] = [
-  [/rgba\(\s*34\s*,\s*197\s*,\s*94/gi, "rgba(15, 118, 110"],
+  [/rgba\(\s*34\s*,\s*197\s*,\s*94/gi, "rgba(20, 184, 166"],
   [/rgba\(\s*249\s*,\s*115\s*,\s*22/gi, "rgba(245, 158, 11"],
   [/rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\s*\)/gi, "rgba(0,0,0,0)"],
 ];
 
 const CSS_VAR_MAP: Record<string, string> = {
-  "--bg-dark": "#f8fafc",
-  "--bg-panel": "#ffffff",
-  "--text-light": "#1f2937",
-  "--accent-green": "#0f766e",
+  "--bg-dark": "#111827",
+  "--bg-panel": "#1f2937",
+  "--text-light": "#e5e7eb",
+  "--accent-green": "#14b8a6",
   "--accent-orange": "#f59e0b",
 };
 
 const TAILWIND_CLASS_MAP: [RegExp, string][] = [
-  [/\btext-neon-green\b/g, "text-primary"],
+  [/\btext-neon-green\b/g, "text-primary-light"],
   [/\btext-neon-orange\b/g, "text-accent"],
   [/\bbg-neon-green\b/g, "bg-primary"],
   [/\bbg-neon-orange\b/g, "bg-accent"],
-  [/\bborder-neon-green\b/g, "border-primary"],
+  [/\bborder-neon-green\b/g, "border-primary-light"],
   [/\bborder-neon-orange\b/g, "border-accent"],
-  [/\bbg-dark-bg\b/g, "bg-surface"],
-  [/\bbg-dark-panel\b/g, "bg-card"],
-  [/\bhover:border-neon-green\b/g, "hover:border-primary"],
+  [/\bbg-dark-bg\b/g, "bg-surface-dark"],
+  [/\bbg-dark-panel\b/g, "bg-card-dark"],
+  [/\bhover:border-neon-green\b/g, "hover:border-primary-light"],
   [/\bhover:border-neon-orange\b/g, "hover:border-accent"],
-  [/\bhover:text-neon-green\b/g, "hover:text-primary"],
+  [/\bhover:text-neon-green\b/g, "hover:text-primary-light"],
   [/\bhover:text-neon-orange\b/g, "hover:text-accent"],
   [/!bg-neon-orange/g, "!bg-accent"],
   [/!bg-neon-green/g, "!bg-primary"],
   [/!border-neon-orange/g, "!border-accent"],
   [/!border-neon-green/g, "!border-primary"],
-  [/!color-dark-bg/g, "!text-surface"],
+  [/!color-dark-bg/g, "!text-gray-100"],
+  [/\btext-gray-900\b/g, "text-gray-100"],
+  [/\btext-gray-800\b/g, "text-gray-200"],
+  [/\btext-gray-700\b/g, "text-gray-300"],
+  [/\bbg-white\b/g, "bg-card-dark"],
+  [/\bbg-gray-50\b/g, "bg-surface-dark"],
+  [/\bbg-gray-100\b/g, "bg-surface-dark"],
+  [/\bborder-gray-200\b/g, "border-border-dark"],
+  [/\bborder-gray-300\b/g, "border-border-dark"],
 ];
 
 function applyColorMap(text: string): string {
@@ -88,11 +99,11 @@ function cleanFonts(css: string): string {
 function softenGlows(css: string): string {
   css = css.replace(
     /box-shadow:\s*0\s+0\s+\d+px\s+rgba\([^)]+\)/gi,
-    "box-shadow: 0 1px 3px rgba(0,0,0,0.08)"
+    "box-shadow: 0 2px 8px rgba(0,0,0,0.3)"
   );
   css = css.replace(
     /shadow-\[0_0_\d+px_rgba\([^)]+\)\]/g,
-    "shadow-sm"
+    "shadow-md"
   );
   return css;
 }
@@ -201,10 +212,15 @@ export function transformHtml(rawHtml: string): TransformResult {
   styles = cleanFonts(styles);
   styles = softenGlows(styles);
 
-  // Remove body-level background (we use site default)
+  // Body background inherits from site
   styles = styles.replace(
     /background-color:\s*var\(--bg-dark\)\s*;/gi,
     "background-color: transparent;"
+  );
+  // White backgrounds in body rule → transparent
+  styles = styles.replace(
+    /body\s*\{[^}]*\}/gi,
+    (match) => match.replace(/background-color:\s*#(?:fff(?:fff)?|f8fafc)\s*;/gi, "background-color: transparent;")
   );
 
   // Transform body HTML

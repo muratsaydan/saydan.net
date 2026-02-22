@@ -7,10 +7,10 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
 ---
 <style>
 :root {
-            --bg-dark: #f8fafc;
-            --bg-panel: #ffffff;
-            --text-light: #1f2937;
-            --accent-green: #0f766e;
+            --bg-dark: #111827;
+            --bg-panel: #1f2937;
+            --text-light: #e5e7eb;
+            --accent-green: #14b8a6;
             --accent-orange: #f59e0b;
         }
         body {
@@ -29,7 +29,7 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
         .cartoon-panel {
             background-color: var(--bg-panel);
             border: 3px solid var(--accent-green);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
             border-radius: 8px;
             overflow: hidden;
             margin: 3rem 0;
@@ -50,7 +50,7 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
             align-items: center;
             padding: 2.5rem;
             min-height: 200px;
-            background-image: radial-gradient(rgba(15, 118, 110, 0.1) 1px, transparent 1px);
+            background-image: radial-gradient(rgba(20, 184, 166, 0.1) 1px, transparent 1px);
             background-size: 20px 20px;
         }
         .speech-bubble {
@@ -85,7 +85,7 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
             padding: 2rem;
             margin: 2.5rem 0;
             height: 400px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
         
         .interactive-btn {
@@ -101,7 +101,7 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
             background: transparent;
             color: var(--accent-green);
             border-color: var(--accent-green);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         /* AI Section Styles */
@@ -112,7 +112,7 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
             padding: 2.5rem;
             margin: 4rem 0;
             border: 2px solid var(--accent-green);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
         .loading-dots:after {
             content: ' .';
@@ -162,18 +162,18 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
             </p>
 
             <!-- Interaction: Speed Race -->
-            <div class="bg-card rounded-2xl p-8 border border-primary/30 mb-12">
+            <div class="bg-card-dark rounded-2xl p-8 border border-primary-light/30 mb-12">
                 <div class="space-y-8">
                     <div>
                         <div class="flex justify-between text-xs font-bold mb-2 uppercase text-accent/80">Manuel Zincir (Telefon/Excel)</div>
-                        <div class="w-full bg-surface rounded-full h-4 overflow-hidden border border-accent/20">
-                            <div id="m-bar" class="bg-accent h-full w-0 transition-all duration-[4500ms] shadow-sm"></div>
+                        <div class="w-full bg-surface-dark rounded-full h-4 overflow-hidden border border-accent/20">
+                            <div id="m-bar" class="bg-accent h-full w-0 transition-all duration-[4500ms] shadow-md"></div>
                         </div>
                     </div>
                     <div>
-                        <div class="flex justify-between text-xs font-bold mb-2 uppercase text-primary/80">Dijital Ekosistem (Anlık Veri)</div>
-                        <div class="w-full bg-surface rounded-full h-4 overflow-hidden border border-primary/20">
-                            <div id="d-bar" class="bg-primary h-full w-0 transition-all duration-[800ms] shadow-sm"></div>
+                        <div class="flex justify-between text-xs font-bold mb-2 uppercase text-primary-light/80">Dijital Ekosistem (Anlık Veri)</div>
+                        <div class="w-full bg-surface-dark rounded-full h-4 overflow-hidden border border-primary-light/20">
+                            <div id="d-bar" class="bg-primary h-full w-0 transition-all duration-[800ms] shadow-md"></div>
                         </div>
                     </div>
                 </div>
@@ -186,7 +186,7 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
 
         <!-- Cartoon 2: The Telephone Game -->
         <div class="cartoon-panel">
-            <div class="cartoon-header !bg-accent !text-surface">Karikatür #2: "Kamyon Nerede?" Paradoksu</div>
+            <div class="cartoon-header !bg-accent !text-gray-900">Karikatür #2: "Kamyon Nerede?" Paradoksu</div>
             <div class="cartoon-content">
                 <div class="flex items-center space-x-2">
                     <div class="text-4xl">👨‍💼📞</div>
@@ -268,16 +268,16 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
             manual: {
                 label: 'Manuel Süreç Performansı',
                 data: [30, 80, 75, 20, 30],
-                color: 'rgba(245, 158, 11, 0.5)', // Neon Orange
+                color: 'rgba(245, 158, 11, 0.5)',
                 border: '#f59e0b',
                 pointColor: '#f59e0b'
             },
             software: {
                 label: 'Yazılım Destekli Performans',
                 data: [98, 30, 05, 95, 90],
-                color: 'rgba(15, 118, 110, 0.5)', // Neon Green
-                border: '#0f766e',
-                pointColor: '#0f766e'
+                color: 'rgba(20, 184, 166, 0.5)',
+                border: '#14b8a6',
+                pointColor: '#14b8a6'
             }
         };
 
@@ -311,8 +311,8 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
 
         // --- RADAR CHART LOGIC ---
         function initRadar() {
-            Chart.defaults.color = '#1f2937';
-            Chart.defaults.borderColor = 'rgba(15, 118, 110, 0.2)';
+            Chart.defaults.color = '#e5e7eb';
+            Chart.defaults.borderColor = 'rgba(20, 184, 166, 0.2)';
             const ctx = document.getElementById('radarChart').getContext('2d');
             radarChart = new Chart(ctx, {
                 type: 'radar',
@@ -325,12 +325,12 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
                     scales: {
                         r: {
                             suggestedMin: 0, suggestedMax: 100, ticks: { display: false, backdropColor: 'transparent' },
-                            grid: { color: 'rgba(15, 118, 110, 0.1)' },
-                            angleLines: { color: 'rgba(15, 118, 110, 0.2)' },
-                            pointLabels: { font: { size: 12, weight: 'bold' }, color: '#1f2937' }
+                            grid: { color: 'rgba(20, 184, 166, 0.15)' },
+                            angleLines: { color: 'rgba(20, 184, 166, 0.2)' },
+                            pointLabels: { font: { size: 12, weight: 'bold' }, color: '#e5e7eb' }
                         }
                     },
-                    plugins: { legend: { position: 'top', labels: { font: { weight: 'bold' }, color: '#1f2937' } } }
+                    plugins: { legend: { position: 'top', labels: { font: { weight: 'bold' }, color: '#e5e7eb' } } }
                 }
             });
         }
@@ -345,7 +345,7 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
                 borderWidth: 3,
                 pointRadius: 5,
                 pointBackgroundColor: d.pointColor,
-                pointBorderColor: '#fff'
+                pointBorderColor: '#1f2937'
             }];
             radarChart.update();
         }
@@ -362,17 +362,17 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
             };
             const trace2 = {
                 x: months, y: softwareSavings, name: 'Kümülatif Yazılım Tasarrufu',
-                fill: 'tozeroy', type: 'scatter', mode: 'lines', line: {color: '#0f766e', width: 4},
-                fillcolor: 'rgba(15, 118, 110, 0.2)'
+                fill: 'tozeroy', type: 'scatter', mode: 'lines',                 line: {color: '#14b8a6', width: 4},
+                fillcolor: 'rgba(20, 184, 166, 0.2)'
             };
 
             const layout = {
                 margin: { t: 20, b: 40, l: 40, r: 20 },
                 showlegend: true,
-                legend: { orientation: 'h', y: -0.2, font: { color: '#1f2937' } },
-                font: { family: 'Inter', size: 10, color: '#1f2937' },
-                xaxis: { showgrid: false, color: '#1f2937' },
-                yaxis: { title: 'Verimlilik Skoru', gridcolor: 'rgba(15, 118, 110, 0.1)', color: '#1f2937' },
+                legend: { orientation: 'h', y: -0.2, font: { color: '#e5e7eb' } },
+                font: { family: 'var(--font-sans), system-ui, sans-serif', size: 10, color: '#e5e7eb' },
+                xaxis: { showgrid: false, color: '#e5e7eb' },
+                yaxis: { title: 'Verimlilik Skoru', gridcolor: 'rgba(20, 184, 166, 0.1)', color: '#e5e7eb' },
                 paper_bgcolor: 'rgba(0,0,0,0)',
                 plot_bgcolor: 'rgba(0,0,0,0)'
             };
