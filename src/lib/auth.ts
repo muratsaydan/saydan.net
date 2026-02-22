@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
-const ALLOWED_EMAILS = ["murat@saydan.net"];
+export const ALLOWED_EMAILS = ["murat@saydan.net", "muratsaydan1@gmail.com"];
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -12,10 +12,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   pages: {
     signIn: "/auth/login",
+    error: "/auth/login",
   },
   callbacks: {
-    async signIn({ profile }) {
-      return ALLOWED_EMAILS.includes(profile?.email ?? "");
+    async signIn({ profile, user }) {
+      const email = profile?.email ?? user?.email ?? "";
+      return ALLOWED_EMAILS.includes(email);
     },
     async session({ session }) {
       return session;

@@ -1,6 +1,5 @@
 import { auth } from "@/lib/auth";
-
-const ALLOWED_EMAILS = ["murat@saydan.net"];
+import { ALLOWED_EMAILS } from "@/lib/auth";
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;

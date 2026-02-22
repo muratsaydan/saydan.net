@@ -15,15 +15,15 @@ const sections = [
     status: "Yakında",
   },
   {
-    title: "Araçlar & Uygulamalar",
-    description: "SaydanChatBox, mobil uygulama linkleri ve özel araçlar",
-    href: "/private/tools",
+    title: "SaydanChatBox",
+    description: "Kişisel AI sohbet asistanı",
+    href: "https://chat.saydan.net",
     icon: (
       <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.384 3.077A1.5 1.5 0 014.5 16.922V7.078a1.5 1.5 0 011.536-1.325L11.42 8.83a1.5 1.5 0 010 6.34zm0 0l.838.479m-.838-.479L18.35 8.83a1.5 1.5 0 011.536 1.325v9.844a1.5 1.5 0 01-1.536 1.325l-5.384-3.077" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
       </svg>
     ),
-    status: "Yakında",
+    external: true,
   },
   {
     title: "Şifre Yönetimi",
@@ -68,40 +68,50 @@ export default async function PrivateDashboard() {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
-        {sections.map((section) => (
-          <div
-            key={section.title}
-            className="group relative rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:border-primary/20 hover:shadow-md dark:border-border-dark dark:bg-card-dark dark:hover:border-primary-light/20"
-          >
-            <div className="mb-4 flex items-center justify-between">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary dark:bg-primary-light/10 dark:text-primary-light">
-                {section.icon}
+        {sections.map((section) => {
+          const isActive = section.external || (!section.status);
+          const isExternal = "external" in section && section.external;
+
+          return (
+            <div
+              key={section.title}
+              className="group relative rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:border-primary/20 hover:shadow-md dark:border-border-dark dark:bg-card-dark dark:hover:border-primary-light/20"
+            >
+              <div className="mb-4 flex items-center justify-between">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary dark:bg-primary-light/10 dark:text-primary-light">
+                  {section.icon}
+                </div>
+                {"status" in section && section.status && (
+                  <span className="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+                    {section.status}
+                  </span>
+                )}
               </div>
-              {section.status && (
-                <span className="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
-                  {section.status}
-                </span>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                {section.title}
+              </h2>
+              <p className="mt-1 text-sm text-muted">{section.description}</p>
+              {isActive ? (
+                <a
+                  href={section.href}
+                  {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-dark dark:text-primary-light dark:hover:text-primary"
+                >
+                  {isExternal ? "Aç" : "Git"}
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    {isExternal ? (
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    ) : (
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    )}
+                  </svg>
+                </a>
+              ) : (
+                <div className="mt-4 text-xs text-muted">Henüz aktif değil</div>
               )}
             </div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              {section.title}
-            </h2>
-            <p className="mt-1 text-sm text-muted">{section.description}</p>
-            {section.status === "Yakında" || section.status === "Gelecek" ? (
-              <div className="mt-4 text-xs text-muted">Henüz aktif değil</div>
-            ) : (
-              <Link
-                href={section.href}
-                className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-dark dark:text-primary-light dark:hover:text-primary"
-              >
-                Aç
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </Link>
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
