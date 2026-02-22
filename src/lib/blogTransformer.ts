@@ -224,6 +224,28 @@ export function transformHtml(rawHtml: string): TransformResult {
   // Transform inline script
   inlineScript = applyColorMap(inlineScript);
 
+  // DOMContentLoaded/onload already fired by the time scripts run via new Function()
+  inlineScript = inlineScript.replace(
+    /window\.addEventListener\(\s*['"]DOMContentLoaded['"]\s*,\s*(\w+)\s*\)/g,
+    "setTimeout($1, 0)"
+  );
+  inlineScript = inlineScript.replace(
+    /document\.addEventListener\(\s*['"]DOMContentLoaded['"]\s*,\s*(\w+)\s*\)/g,
+    "setTimeout($1, 0)"
+  );
+  inlineScript = inlineScript.replace(
+    /window\.onload\s*=\s*(\w+)\s*;/g,
+    "setTimeout($1, 0);"
+  );
+  inlineScript = inlineScript.replace(
+    /window\.onload\s*=\s*\(\s*\)\s*=>\s*\{/g,
+    "setTimeout(() => {"
+  );
+  inlineScript = inlineScript.replace(
+    /window\.onload\s*=\s*function\s*\(\s*\)\s*\{/g,
+    "setTimeout(function() {"
+  );
+
   // Assemble final clean HTML (no DOCTYPE/html/head/body wrappers)
   let finalHtml = "";
 
