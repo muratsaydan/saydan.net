@@ -32,6 +32,7 @@ const CSS_VAR_MAP: Record<string, string> = {
 };
 
 const TAILWIND_CLASS_MAP: [RegExp, string][] = [
+  // Neon / custom brand colors
   [/\btext-neon-green\b/g, "text-primary-light"],
   [/\btext-neon-orange\b/g, "text-accent"],
   [/\bbg-neon-green\b/g, "bg-primary"],
@@ -49,14 +50,57 @@ const TAILWIND_CLASS_MAP: [RegExp, string][] = [
   [/!border-neon-orange/g, "!border-accent"],
   [/!border-neon-green/g, "!border-primary"],
   [/!color-dark-bg/g, "!text-gray-100"],
+
+  // Text: light-theme dark text → dark-theme light text
   [/\btext-gray-900\b/g, "text-gray-100"],
   [/\btext-gray-800\b/g, "text-gray-200"],
   [/\btext-gray-700\b/g, "text-gray-300"],
+  [/\btext-gray-600\b/g, "text-gray-400"],
+  [/\btext-gray-500\b/g, "text-gray-400"],
+  [/\btext-slate-900\b/g, "text-gray-100"],
+  [/\btext-slate-800\b/g, "text-gray-200"],
+  [/\btext-slate-700\b/g, "text-gray-300"],
+  [/\btext-slate-600\b/g, "text-gray-400"],
+  [/\btext-slate-500\b/g, "text-gray-500"],
+
+  // Backgrounds: light → dark
   [/\bbg-white\b/g, "bg-card-dark"],
   [/\bbg-gray-50\b/g, "bg-surface-dark"],
   [/\bbg-gray-100\b/g, "bg-surface-dark"],
+  [/\bbg-slate-50\b/g, "bg-card-dark"],
+  [/\bbg-slate-100\b/g, "bg-surface-dark"],
+  [/\bbg-blue-50\b/g, "bg-card-dark"],
+  [/\bbg-green-50\b/g, "bg-card-dark"],
+  [/\bbg-emerald-50\b/g, "bg-card-dark"],
+  [/\bbg-teal-50\b/g, "bg-card-dark"],
+  [/\bbg-indigo-50\b/g, "bg-card-dark"],
+  [/\bbg-cyan-50\b/g, "bg-card-dark"],
+  [/\bbg-orange-50\b/g, "bg-card-dark"],
+  [/\bbg-red-50\b/g, "bg-card-dark"],
+  [/\bbg-yellow-50\b/g, "bg-card-dark"],
+  [/\bbg-purple-50\b/g, "bg-card-dark"],
+
+  // Borders: light → dark
   [/\bborder-gray-200\b/g, "border-border-dark"],
   [/\bborder-gray-300\b/g, "border-border-dark"],
+  [/\bborder-slate-100\b/g, "border-border-dark"],
+  [/\bborder-slate-200\b/g, "border-border-dark"],
+  [/\bborder-slate-300\b/g, "border-border-dark"],
+  [/\bborder-blue-100\b/g, "border-primary/20"],
+  [/\bborder-blue-200\b/g, "border-primary/30"],
+
+  // Hover states
+  [/\bhover:bg-slate-50\b/g, "hover:bg-surface-dark"],
+  [/\bhover:bg-blue-50\b/g, "hover:bg-primary/10"],
+  [/\bhover:border-blue-200\b/g, "hover:border-primary/30"],
+  [/\bhover:border-blue-500\b/g, "hover:border-primary-light"],
+  [/\bhover:text-blue-600\b/g, "hover:text-primary-light"],
+  [/\bhover:text-green-600\b/g, "hover:text-primary"],
+  [/\bhover:text-orange-600\b/g, "hover:text-accent"],
+
+  // Open / group states
+  [/\bopen:bg-slate-100\b/g, "open:bg-surface-dark"],
+  [/\bgroup-hover:text-blue-600\b/g, "group-hover:text-primary-light"],
 ];
 
 function applyColorMap(text: string): string {

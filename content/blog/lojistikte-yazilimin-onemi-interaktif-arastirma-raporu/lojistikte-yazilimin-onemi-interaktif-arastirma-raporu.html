@@ -77,53 +77,53 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
         <!-- Hero Section -->
         <section id="hero" class="text-center pt-10 pb-6">
             <div class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-4">KAPSAMLI ARAŞTIRMA RAPORU</div>
-            <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-gray-100 tracking-tight mb-6">
                 Lojistikte Yazılımın <br class="hidden md:block" />
                 <span class="text-primary">Stratejik Gücü</span>
             </h1>
-            <p class="mt-4 max-w-2xl mx-auto text-xl text-slate-600">
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400">
                 Dijital dönüşümün tedarik zincirini nasıl yeniden şekillendirdiğini, operasyonel verimlilikten Mersin limanına kadar uzanan etkilerini keşfedin.
             </p>
             <div class="mt-8 flex justify-center gap-4">
                 <button onclick="scrollToSection('evolution')" class="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-500/30">
                     Raporu İncele
                 </button>
-                <button onclick="scrollToSection('conclusion')" class="bg-card-dark text-slate-700 border border-slate-300 px-8 py-3 rounded-lg font-semibold hover:bg-slate-50 transition">
+                <button onclick="scrollToSection('conclusion')" class="bg-card-dark text-gray-300 border border-border-dark px-8 py-3 rounded-lg font-semibold hover:bg-card-dark transition">
                     Özet Bulgular
                 </button>
             </div>
         </section>
 
         <!-- Section 1: Evolution (Historical Context) -->
-        <section id="evolution" class="bg-card-dark rounded-2xl shadow-sm border border-slate-100 p-8">
+        <section id="evolution" class="bg-card-dark rounded-2xl shadow-sm border border-border-dark p-8">
             <div class="max-w-3xl mx-auto mb-10 text-center">
-                <h2 class="text-3xl font-bold text-slate-900 mb-4">Dijital Lojistiğin Evrimi</h2>
-                <p class="text-slate-600">
+                <h2 class="text-3xl font-bold text-gray-100 mb-4">Dijital Lojistiğin Evrimi</h2>
+                <p class="text-gray-400">
                     Lojistik, kağıt kalemle tutulan kayıtlardan, yapay zeka destekli otonom ağlara uzanan radikal bir değişim geçirdi. Bu bölüm, sektörün teknolojik kırılma noktalarını inceler.
                 </p>
             </div>
 
             <!-- Interactive Timeline Tabs -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                <button onclick="setTimeline(0)" class="timeline-tab p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-200 transition text-left active-timeline" data-index="0">
+                <button onclick="setTimeline(0)" class="timeline-tab p-4 rounded-xl border border-border-dark bg-card-dark hover:bg-card-dark hover:border-primary/30 transition text-left active-timeline" data-index="0">
                     <div class="text-2xl font-bold text-slate-400 mb-1">1980-1990</div>
-                    <div class="font-semibold text-slate-800">ERP'nin Doğuşu</div>
+                    <div class="font-semibold text-gray-200">ERP'nin Doğuşu</div>
                 </button>
-                <button onclick="setTimeline(1)" class="timeline-tab p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-200 transition text-left" data-index="1">
+                <button onclick="setTimeline(1)" class="timeline-tab p-4 rounded-xl border border-border-dark bg-card-dark hover:bg-card-dark hover:border-primary/30 transition text-left" data-index="1">
                     <div class="text-2xl font-bold text-slate-400 mb-1">2000'ler</div>
-                    <div class="font-semibold text-slate-800">WMS & İnternet</div>
+                    <div class="font-semibold text-gray-200">WMS & İnternet</div>
                 </button>
-                <button onclick="setTimeline(2)" class="timeline-tab p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-200 transition text-left" data-index="2">
+                <button onclick="setTimeline(2)" class="timeline-tab p-4 rounded-xl border border-border-dark bg-card-dark hover:bg-card-dark hover:border-primary/30 transition text-left" data-index="2">
                     <div class="text-2xl font-bold text-slate-400 mb-1">2010'lar</div>
-                    <div class="font-semibold text-slate-800">Bulut & Mobilite</div>
+                    <div class="font-semibold text-gray-200">Bulut & Mobilite</div>
                 </button>
-                <button onclick="setTimeline(3)" class="timeline-tab p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-200 transition text-left" data-index="3">
+                <button onclick="setTimeline(3)" class="timeline-tab p-4 rounded-xl border border-border-dark bg-card-dark hover:bg-card-dark hover:border-primary/30 transition text-left" data-index="3">
                     <div class="text-2xl font-bold text-slate-400 mb-1">2020+</div>
-                    <div class="font-semibold text-slate-800">Yapay Zeka & IoT</div>
+                    <div class="font-semibold text-gray-200">Yapay Zeka & IoT</div>
                 </button>
             </div>
 
-            <div id="timeline-content" class="bg-slate-50 rounded-xl p-8 border border-slate-200 transition-all duration-300">
+            <div id="timeline-content" class="bg-card-dark rounded-xl p-8 border border-border-dark transition-all duration-300">
                 <!-- Dynamic Content Loads Here -->
             </div>
         </section>
@@ -131,43 +131,43 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
         <!-- Section 2: Core Systems (WMS, TMS, ERP) -->
         <section id="systems" class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
-                <h2 class="text-3xl font-bold text-slate-900 mb-4">Lojistik Yazılımın Omurgası</h2>
-                <p class="text-slate-600 mb-6">
+                <h2 class="text-3xl font-bold text-gray-100 mb-4">Lojistik Yazılımın Omurgası</h2>
+                <p class="text-gray-400 mb-6">
                     Modern tedarik zinciri, birbirine entegre üç temel sistem üzerine kuruludur. Bu sistemler, siparişin alınmasından teslimatına kadar olan sürecin beynini oluşturur. Aşağıdaki bloklara tıklayarak detayları inceleyin.
                 </p>
                 
                 <!-- Interactive System Selector -->
                 <div class="space-y-4">
                     <div onclick="showSystemDetail('erp')" class="cursor-pointer group p-5 border-l-4 border-blue-600 bg-card-dark shadow-sm hover:shadow-md transition rounded-r-lg">
-                        <h3 class="font-bold text-lg text-slate-800 group-hover:text-blue-600 flex justify-between">
+                        <h3 class="font-bold text-lg text-gray-200 group-hover:text-primary-light flex justify-between">
                             ERP (Kurumsal Kaynak Planlama)
                             <span class="text-slate-300">🏢</span>
                         </h3>
-                        <p class="text-sm text-slate-500 mt-1">Finans, İK ve ana veri yönetimi entegrasyonu.</p>
+                        <p class="text-sm text-gray-500 mt-1">Finans, İK ve ana veri yönetimi entegrasyonu.</p>
                     </div>
                     <div onclick="showSystemDetail('wms')" class="cursor-pointer group p-5 border-l-4 border-green-500 bg-card-dark shadow-sm hover:shadow-md transition rounded-r-lg">
-                        <h3 class="font-bold text-lg text-slate-800 group-hover:text-green-600 flex justify-between">
+                        <h3 class="font-bold text-lg text-gray-200 group-hover:text-primary flex justify-between">
                             WMS (Depo Yönetim Sistemi)
                             <span class="text-slate-300">📦</span>
                         </h3>
-                        <p class="text-sm text-slate-500 mt-1">Stok takibi, raf optimizasyonu ve toplama süreçleri.</p>
+                        <p class="text-sm text-gray-500 mt-1">Stok takibi, raf optimizasyonu ve toplama süreçleri.</p>
                     </div>
                     <div onclick="showSystemDetail('tms')" class="cursor-pointer group p-5 border-l-4 border-orange-500 bg-card-dark shadow-sm hover:shadow-md transition rounded-r-lg">
-                        <h3 class="font-bold text-lg text-slate-800 group-hover:text-orange-600 flex justify-between">
+                        <h3 class="font-bold text-lg text-gray-200 group-hover:text-accent flex justify-between">
                             TMS (Taşıma Yönetim Sistemi)
                             <span class="text-slate-300">🚛</span>
                         </h3>
-                        <p class="text-sm text-slate-500 mt-1">Rota planlama, nakliye maliyetleri ve kargo takibi.</p>
+                        <p class="text-sm text-gray-500 mt-1">Rota planlama, nakliye maliyetleri ve kargo takibi.</p>
                     </div>
                 </div>
             </div>
 
             <!-- Dynamic Detail View -->
-            <div class="bg-card-dark rounded-2xl shadow-lg border border-slate-100 p-8 h-full flex flex-col justify-center" id="system-detail-panel">
+            <div class="bg-card-dark rounded-2xl shadow-lg border border-border-dark p-8 h-full flex flex-col justify-center" id="system-detail-panel">
                 <div class="text-center">
                     <div class="text-6xl mb-4">🔗</div>
-                    <h3 class="text-2xl font-bold text-slate-800 mb-2">Entegre Ekosistem</h3>
-                    <p class="text-slate-600">
+                    <h3 class="text-2xl font-bold text-gray-200 mb-2">Entegre Ekosistem</h3>
+                    <p class="text-gray-400">
                         Bir yazılımın çıktısı, diğerinin girdisidir. Veri akışını görmek için sol taraftaki sistemlere tıklayın.
                     </p>
                 </div>
@@ -177,18 +177,18 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
         <!-- Section 3: Impact Analysis (Charts) -->
         <section id="impact" class="pt-12">
             <div class="mb-8">
-                <h2 class="text-3xl font-bold text-slate-900">Yazılımın Somut Etkileri ve Zorlukları</h2>
-                <p class="text-slate-600 mt-2 max-w-3xl">
+                <h2 class="text-3xl font-bold text-gray-100">Yazılımın Somut Etkileri ve Zorlukları</h2>
+                <p class="text-gray-400 mt-2 max-w-3xl">
                     Yazılım entegrasyonu sadece "modernleşmek" değildir; maliyet, hız ve doğruluk üzerinde ölçülebilir sonuçlar doğurur. Ancak bu süreç risksiz değildir.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Positive Impact Chart -->
-                <div class="bg-card-dark p-6 rounded-2xl shadow-sm border border-slate-100">
+                <div class="bg-card-dark p-6 rounded-2xl shadow-sm border border-border-dark">
                     <div class="flex justify-between items-center mb-6">
-                        <h3 class="font-bold text-lg text-slate-800">Verimlilik Artışı (Geleneksel vs. Dijital)</h3>
-                        <select id="metric-select" onchange="updateImpactChart()" class="text-sm border-slate-300 rounded-md shadow-sm bg-slate-50 p-1">
+                        <h3 class="font-bold text-lg text-gray-200">Verimlilik Artışı (Geleneksel vs. Dijital)</h3>
+                        <select id="metric-select" onchange="updateImpactChart()" class="text-sm border-border-dark rounded-md shadow-sm bg-card-dark p-1">
                             <option value="all">Genel Bakış</option>
                             <option value="cost">Maliyet Tasarrufu</option>
                             <option value="time">Zaman Tasarrufu</option>
@@ -201,8 +201,8 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
                 </div>
 
                 <!-- Challenges & Risks -->
-                <div class="bg-card-dark p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
-                    <h3 class="font-bold text-lg text-slate-800 mb-6">Adaptasyon Zorlukları</h3>
+                <div class="bg-card-dark p-6 rounded-2xl shadow-sm border border-border-dark flex flex-col">
+                    <h3 class="font-bold text-lg text-gray-200 mb-6">Adaptasyon Zorlukları</h3>
                     <div class="space-y-3 flex-grow">
                         <!-- Accordion Items -->
                         <details class="group bg-red-50 rounded-lg p-4 open:bg-red-100 transition">
@@ -210,27 +210,27 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
                                 Yüksek Başlangıç Maliyetleri
                                 <span class="group-open:rotate-180 transition-transform">▼</span>
                             </summary>
-                            <div class="text-slate-700 mt-3 text-sm">
+                            <div class="text-gray-300 mt-3 text-sm">
                                 Lisans ücretleri, donanım yenilemeleri ve danışmanlık giderleri KOBİ'ler için ciddi bir bariyer oluşturmaktadır. ROI süresi 12-24 ay sürebilir.
                             </div>
                         </details>
                         
-                        <details class="group bg-slate-50 rounded-lg p-4 open:bg-slate-100 transition">
-                            <summary class="flex justify-between items-center font-semibold cursor-pointer text-slate-800">
+                        <details class="group bg-card-dark rounded-lg p-4 open:bg-surface-dark transition">
+                            <summary class="flex justify-between items-center font-semibold cursor-pointer text-gray-200">
                                 Siber Güvenlik Riskleri
                                 <span class="group-open:rotate-180 transition-transform">▼</span>
                             </summary>
-                            <div class="text-slate-700 mt-3 text-sm">
+                            <div class="text-gray-300 mt-3 text-sm">
                                 Tüm verilerin dijitalleşmesi, fidye yazılımı (ransomware) saldırılarına karşı lojistik ağlarını savunmasız bırakabilir. 2023'te lojistik firmalarına yönelik siber saldırılar %40 artmıştır.
                             </div>
                         </details>
 
-                        <details class="group bg-slate-50 rounded-lg p-4 open:bg-slate-100 transition">
-                            <summary class="flex justify-between items-center font-semibold cursor-pointer text-slate-800">
+                        <details class="group bg-card-dark rounded-lg p-4 open:bg-surface-dark transition">
+                            <summary class="flex justify-between items-center font-semibold cursor-pointer text-gray-200">
                                 Nitelikli Personel Eksikliği
                                 <span class="group-open:rotate-180 transition-transform">▼</span>
                             </summary>
-                            <div class="text-slate-700 mt-3 text-sm">
+                            <div class="text-gray-300 mt-3 text-sm">
                                 Yeni sistemleri kullanacak ve yönetecek teknik bilgiye sahip personelin (veri analistleri, sistem yöneticileri) bulunması ve eğitilmesi zordur.
                             </div>
                         </details>
@@ -249,19 +249,19 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
                     </p>
                     
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 hover:border-blue-500 transition">
+                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 hover:border-primary-light transition">
                             <h4 class="font-bold text-blue-300">Yapay Zeka (AI)</h4>
                             <p class="text-xs text-slate-400 mt-1">Talep tahmini ve otonom rota optimizasyonu.</p>
                         </div>
-                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 hover:border-blue-500 transition">
+                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 hover:border-primary-light transition">
                             <h4 class="font-bold text-blue-300">IoT & Sensörler</h4>
                             <p class="text-xs text-slate-400 mt-1">Anlık konum, sıcaklık ve nem takibi.</p>
                         </div>
-                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 hover:border-blue-500 transition">
+                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 hover:border-primary-light transition">
                             <h4 class="font-bold text-blue-300">Blockchain</h4>
                             <p class="text-xs text-slate-400 mt-1">Şeffaf, değiştirilemez tedarik zinciri kaydı.</p>
                         </div>
-                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 hover:border-blue-500 transition">
+                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 hover:border-primary-light transition">
                             <h4 class="font-bold text-blue-300">Büyük Veri</h4>
                             <p class="text-xs text-slate-400 mt-1">Tüketici davranış analizi ve stratejik planlama.</p>
                         </div>
@@ -280,33 +280,33 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
         <section id="mersin" class="pt-12">
             <div class="text-center max-w-3xl mx-auto mb-12">
                 <span class="text-primary font-bold tracking-wider text-sm uppercase">Vaka Analizi</span>
-                <h2 class="text-3xl font-bold text-slate-900 mt-2">Küresel Vizyon ve Mersin Lojistiği</h2>
-                <p class="text-slate-600 mt-4">
+                <h2 class="text-3xl font-bold text-gray-100 mt-2">Küresel Vizyon ve Mersin Lojistiği</h2>
+                <p class="text-gray-400 mt-4">
                     Dünya devi lojistik firmaları tam otomasyona geçerken, Türkiye'nin en önemli lojistik kapısı Mersin nasıl bir dijital dönüşüm yaşıyor?
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Global Giants Card -->
-                <div class="bg-card-dark p-8 rounded-2xl shadow-sm border border-slate-100 relative overflow-hidden group">
+                <div class="bg-card-dark p-8 rounded-2xl shadow-sm border border-border-dark relative overflow-hidden group">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition text-6xl">🌍</div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-2">Küresel Devler (DHL, Maersk, Amazon)</h3>
+                    <h3 class="text-xl font-bold text-gray-200 mb-2">Küresel Devler (DHL, Maersk, Amazon)</h3>
                     <ul class="space-y-4 mt-6">
                         <li class="flex items-start">
                             <span class="text-green-500 mr-2">✓</span>
-                            <span class="text-slate-600 text-sm">Tam otonom depolar ve robotik toplama.</span>
+                            <span class="text-gray-400 text-sm">Tam otonom depolar ve robotik toplama.</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-green-500 mr-2">✓</span>
-                            <span class="text-slate-600 text-sm">Blockchain tabanlı şeffaf gümrükleme (TradeLens vb.).</span>
+                            <span class="text-gray-400 text-sm">Blockchain tabanlı şeffaf gümrükleme (TradeLens vb.).</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-green-500 mr-2">✓</span>
-                            <span class="text-slate-600 text-sm">AI destekli prediktif (öngörücü) kargo yönetimi.</span>
+                            <span class="text-gray-400 text-sm">AI destekli prediktif (öngörücü) kargo yönetimi.</span>
                         </li>
                     </ul>
-                    <div class="mt-6 pt-6 border-t border-slate-100">
-                        <div class="text-xs text-slate-500 uppercase font-semibold mb-2">Dijital Olgunluk Seviyesi</div>
+                    <div class="mt-6 pt-6 border-t border-border-dark">
+                        <div class="text-xs text-gray-500 uppercase font-semibold mb-2">Dijital Olgunluk Seviyesi</div>
                         <div class="w-full bg-slate-200 rounded-full h-2.5">
                             <div class="bg-blue-600 h-2.5 rounded-full" style="width: 90%"></div>
                         </div>
@@ -314,25 +314,25 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
                 </div>
 
                 <!-- Mersin Context Card -->
-                <div class="bg-blue-50 p-8 rounded-2xl shadow-sm border border-blue-100 relative overflow-hidden group">
+                <div class="bg-card-dark p-8 rounded-2xl shadow-sm border border-primary/20 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition text-6xl">⚓</div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-2">Mersin Lojistik Ekosistemi</h3>
+                    <h3 class="text-xl font-bold text-gray-200 mb-2">Mersin Lojistik Ekosistemi</h3>
                     <ul class="space-y-4 mt-6">
                         <li class="flex items-start">
                             <span class="text-blue-500 mr-2">➜</span>
-                            <span class="text-slate-600 text-sm">Liman Otomasyon Sistemleri (Port Community Systems) entegrasyonu artıyor.</span>
+                            <span class="text-gray-400 text-sm">Liman Otomasyon Sistemleri (Port Community Systems) entegrasyonu artıyor.</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-blue-500 mr-2">➜</span>
-                            <span class="text-slate-600 text-sm">Serbest Bölge firmalarında ERP kullanımı %70 seviyelerine ulaştı.</span>
+                            <span class="text-gray-400 text-sm">Serbest Bölge firmalarında ERP kullanımı %70 seviyelerine ulaştı.</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-orange-500 mr-2">!</span>
-                            <span class="text-slate-600 text-sm">KOBİ ölçeğindeki nakliyecilerde dijitalleşme hala başlangıç aşamasında.</span>
+                            <span class="text-gray-400 text-sm">KOBİ ölçeğindeki nakliyecilerde dijitalleşme hala başlangıç aşamasında.</span>
                         </li>
                     </ul>
-                    <div class="mt-6 pt-6 border-t border-blue-200">
-                        <div class="text-xs text-slate-500 uppercase font-semibold mb-2">Dijital Olgunluk Seviyesi</div>
+                    <div class="mt-6 pt-6 border-t border-primary/30">
+                        <div class="text-xs text-gray-500 uppercase font-semibold mb-2">Dijital Olgunluk Seviyesi</div>
                         <div class="w-full bg-slate-200 rounded-full h-2.5">
                             <div class="bg-blue-500 h-2.5 rounded-full" style="width: 60%"></div>
                         </div>
@@ -365,21 +365,21 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
         </section>
 
         <!-- Section 7: Conclusion -->
-        <section id="conclusion" class="bg-card-dark rounded-2xl shadow-sm border border-slate-100 p-8">
-            <h2 class="text-3xl font-bold text-slate-900 mb-6">Sonuç ve Stratejik Öneriler</h2>
+        <section id="conclusion" class="bg-card-dark rounded-2xl shadow-sm border border-border-dark p-8">
+            <h2 class="text-3xl font-bold text-gray-100 mb-6">Sonuç ve Stratejik Öneriler</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <h4 class="font-bold text-slate-800 mb-2">Özet Bulgular</h4>
-                    <p class="text-slate-600 mb-4 text-sm leading-relaxed">
+                    <h4 class="font-bold text-gray-200 mb-2">Özet Bulgular</h4>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">
                         Yazılım, lojistikte bir "destek birimi" olmaktan çıkıp "işin kendisi" haline gelmiştir. Verimlilik artışı ve maliyet düşüşü kanıtlanmıştır. Mersin gibi stratejik merkezler, fiziksel altyapılarını dijital altyapı ile desteklemek zorundadır.
                     </p>
-                    <ul class="list-disc pl-5 space-y-2 text-sm text-slate-600">
+                    <ul class="list-disc pl-5 space-y-2 text-sm text-gray-400">
                         <li>Veri odaklı karar verme mekanizmaları standartlaşmalıdır.</li>
                         <li>Siber güvenlik yatırımları, fiziksel güvenlik kadar önemsenmelidir.</li>
                         <li>Eğitimli personel istihdamı teşvik edilmelidir.</li>
                     </ul>
                 </div>
-                <div class="bg-blue-50 p-6 rounded-xl flex flex-col justify-center items-center text-center">
+                <div class="bg-card-dark p-6 rounded-xl flex flex-col justify-center items-center text-center">
                     <div class="text-4xl mb-3">📄</div>
                     <h4 class="font-bold text-blue-900 mb-2">Rapor Özeti Oluştur</h4>
                     <p class="text-blue-700 text-xs mb-4">Araştırmanın ana çıktılarını içeren yönetici özetini görüntüleyin.</p>
@@ -392,16 +392,16 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
             <!-- Summary Modal (Hidden by default) -->
             <div id="summary-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                 <div class="bg-card-dark rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl">
-                    <button onclick="closeSummary()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl">✕</button>
-                    <h3 class="text-2xl font-bold text-slate-800 mb-4">Yönetici Özeti</h3>
-                    <div class="prose prose-sm text-slate-600 space-y-3">
+                    <button onclick="closeSummary()" class="absolute top-4 right-4 text-slate-400 hover:text-gray-400 text-xl">✕</button>
+                    <h3 class="text-2xl font-bold text-gray-200 mb-4">Yönetici Özeti</h3>
+                    <div class="prose prose-sm text-gray-400 space-y-3">
                         <p><strong>1. Kritik Dönüşüm:</strong> Lojistik sektörü emek yoğun yapıdan veri yoğun yapıya geçmiştir.</p>
                         <p><strong>2. Yazılımın Rolü:</strong> WMS, TMS ve ERP sistemleri operasyonel hataları %50'ye varan oranlarda azaltmaktadır.</p>
                         <p><strong>3. Gelecek Vizyonu:</strong> AI ve IoT, Mersin gibi liman kentleri için küresel rekabette kalmanın anahtarıdır.</p>
                         <p><strong>4. Eylem Planı:</strong> Firmalar bulut tabanlı sistemlere geçişi hızlandırmalı ve dijital okuryazarlığı artırmalıdır.</p>
                     </div>
                     <div class="mt-6 text-right">
-                        <button onclick="closeSummary()" class="bg-slate-200 text-slate-700 px-4 py-2 rounded hover:bg-slate-300 transition">Kapat</button>
+                        <button onclick="closeSummary()" class="bg-slate-200 text-gray-300 px-4 py-2 rounded hover:bg-slate-300 transition">Kapat</button>
                     </div>
                 </div>
             </div>
@@ -515,11 +515,11 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
             // UI Update
             document.querySelectorAll('.timeline-tab').forEach(tab => {
                 if (parseInt(tab.dataset.index) === index) {
-                    tab.classList.add('bg-blue-50', 'border-blue-500', 'ring-1', 'ring-blue-500');
-                    tab.classList.remove('border-slate-200', 'bg-slate-50');
+                    tab.classList.add('bg-card-dark', 'border-blue-500', 'ring-1', 'ring-blue-500');
+                    tab.classList.remove('border-border-dark', 'bg-card-dark');
                 } else {
-                    tab.classList.remove('bg-blue-50', 'border-blue-500', 'ring-1', 'ring-blue-500');
-                    tab.classList.add('border-slate-200', 'bg-slate-50');
+                    tab.classList.remove('bg-card-dark', 'border-blue-500', 'ring-1', 'ring-blue-500');
+                    tab.classList.add('border-border-dark', 'bg-card-dark');
                 }
             });
 
@@ -531,7 +531,7 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
                         <div class="text-6xl bg-white p-4 rounded-full shadow-sm">${data.icon}</div>
                         <div>
                             <h3 class="text-2xl font-bold text-blue-900 mb-2">${data.title}</h3>
-                            <p class="text-slate-700 text-lg leading-relaxed">${data.desc}</p>
+                            <p class="text-gray-300 text-lg leading-relaxed">${data.desc}</p>
                         </div>
                     </div>
                 `;
@@ -552,12 +552,12 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
                 <div class="animate-fade-in text-center md:text-left">
                     <div class="text-sm font-bold tracking-widest text-slate-400 uppercase mb-2">SİSTEM DETAYI</div>
                     <h3 class="text-3xl font-bold ${colorClass} mb-4">${data.title}</h3>
-                    <p class="text-slate-600 text-lg mb-6 leading-relaxed border-l-4 border-slate-200 pl-4">
+                    <p class="text-gray-400 text-lg mb-6 leading-relaxed border-l-4 border-border-dark pl-4">
                         ${data.content}
                     </p>
-                    <div class="bg-slate-50 rounded-lg p-4 inline-block border border-slate-200">
-                        <span class="font-bold text-slate-800">🚀 Etki:</span> 
-                        <span class="text-slate-600">${data.stats}</span>
+                    <div class="bg-card-dark rounded-lg p-4 inline-block border border-border-dark">
+                        <span class="font-bold text-gray-200">🚀 Etki:</span> 
+                        <span class="text-gray-400">${data.stats}</span>
                     </div>
                 </div>
             `;
