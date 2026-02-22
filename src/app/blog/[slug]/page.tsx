@@ -6,6 +6,7 @@ import { auth, ALLOWED_EMAILS } from "@/lib/auth";
 import RichBlogContent from "@/components/RichBlogContent";
 import BlogQA from "@/components/BlogQA";
 import BlogDeleteButton from "@/components/BlogDeleteButton";
+import BlogArticleReader from "@/components/BlogArticleReader";
 
 type Params = Promise<{ slug: string }>;
 
@@ -117,6 +118,10 @@ export default async function BlogPostPage({ params }: { params: Params }) {
         )}
 
         {post.knowledgeBase && <BlogQA slug={post.slug} />}
+
+        {post.knowledgeBase && (
+          <BlogArticleReader content={post.knowledgeBase} />
+        )}
 
         <hr className="my-12 border-border-dark" />
 
