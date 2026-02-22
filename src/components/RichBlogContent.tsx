@@ -4,64 +4,60 @@ import { useEffect, useRef } from "react";
 import Script from "next/script";
 
 interface RichBlogContentProps {
-  bodyContent: string;
-  styles: string;
-  inlineScript: string;
+  content: string;
   externalScripts: string[];
-  fontLinks: string[];
 }
 
 export default function RichBlogContent({
-  bodyContent,
-  styles,
-  inlineScript,
+  content,
   externalScripts,
-  fontLinks,
 }: RichBlogContentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scriptsLoadedRef = useRef(0);
+  const scriptExecutedRef = useRef(false);
 
-  useEffect(() => {
-    // Inject font links
-    fontLinks.forEach((href) => {
-      if (!document.querySelector(`link[href="${href}"]`)) {
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = href;
-        document.head.appendChild(link);
+  const executeInlineScripts = () => {
+    if (scriptExecutedRef.current || !containerRef.current) return;
+    scriptExecutedRef.current = true;
+
+    const scriptElements =
+      containerRef.current.querySelectorAll("script[data-blog-script]");
+    scriptElements.forEach((el) => {
+      try {
+        const fn = new Function(el.textContent || "");
+        fn();
+      } catch (e) {
+        console.error("Blog script error:", e);
       }
     });
-  }, [fontLinks]);
+  };
 
   const handleScriptLoad = () => {
     scriptsLoadedRef.current += 1;
-    if (scriptsLoadedRef.current >= externalScripts.length && inlineScript) {
-      setTimeout(() => {
-        try {
-          const fn = new Function(inlineScript);
-          fn();
-        } catch (e) {
-          console.error("Blog script error:", e);
-        }
-      }, 100);
+    if (scriptsLoadedRef.current >= externalScripts.length) {
+      setTimeout(executeInlineScripts, 100);
     }
   };
 
+  useEffect(() => {
+    if (externalScripts.length === 0) {
+      setTimeout(executeInlineScripts, 100);
+    }
+  }, [externalScripts.length]);
+
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: styles }} />
-      {externalScripts.map((src, i) => (
+      {externalScripts.map((src) => (
         <Script
           key={src}
           src={src}
           strategy="afterInteractive"
-          onLoad={i === externalScripts.length - 1 ? handleScriptLoad : undefined}
+          onLoad={handleScriptLoad}
         />
       ))}
       <div
         ref={containerRef}
-        className="blog-rich-content"
-        dangerouslySetInnerHTML={{ __html: bodyContent }}
+        dangerouslySetInnerHTML={{ __html: content }}
       />
     </>
   );

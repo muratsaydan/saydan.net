@@ -12,7 +12,11 @@ export async function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return { title: "Yazı bulunamadı" };
@@ -34,15 +38,28 @@ export default async function BlogPostPage({ params }: { params: Params }) {
   const post = getPostBySlug(slug);
   if (!post) notFound();
 
+  const hasScripts = post.externalScripts.length > 0 ||
+    post.content.includes("data-blog-script");
+
   return (
     <article className="py-16 md:py-24">
-      <div className={post.isRichHtml ? "mx-auto max-w-5xl" : "mx-auto max-w-3xl"}>
+      <div className={hasScripts ? "mx-auto max-w-5xl" : "mx-auto max-w-3xl"}>
         <Link
           href="/blog"
           className="inline-flex items-center gap-1 text-sm text-muted transition-colors hover:text-primary"
         >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+            />
           </svg>
           Tüm yazılar
         </Link>
@@ -72,7 +89,9 @@ export default async function BlogPostPage({ params }: { params: Params }) {
               </>
             )}
           </div>
-          <h1 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">{post.title}</h1>
+          <h1 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
+            {post.title}
+          </h1>
           {post.summary && (
             <p className="mt-4 text-lg text-muted">{post.summary}</p>
           )}
@@ -80,13 +99,10 @@ export default async function BlogPostPage({ params }: { params: Params }) {
 
         <hr className="my-8 border-border dark:border-border-dark" />
 
-        {post.isRichHtml && post.richData ? (
+        {hasScripts ? (
           <RichBlogContent
-            bodyContent={post.richData.bodyContent}
-            styles={post.richData.styles}
-            inlineScript={post.richData.inlineScript}
-            externalScripts={post.richData.externalScripts}
-            fontLinks={post.richData.fontLinks}
+            content={post.content}
+            externalScripts={post.externalScripts}
           />
         ) : (
           <div
@@ -103,8 +119,18 @@ export default async function BlogPostPage({ params }: { params: Params }) {
           href="/blog"
           className="inline-flex items-center gap-2 rounded-xl border border-border px-6 py-3 text-sm font-semibold text-gray-700 transition-all hover:border-primary hover:text-primary dark:border-border-dark dark:text-gray-300"
         >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+            />
           </svg>
           Tüm yazılara dön
         </Link>

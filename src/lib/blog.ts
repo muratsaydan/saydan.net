@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import { parseRichHtml, type ParsedRichHtml } from "./blogHtmlParser";
 
 export interface BlogPost {
   slug: string;
@@ -10,8 +9,7 @@ export interface BlogPost {
   tags: string[];
   thumbnail: string;
   content: string;
-  isRichHtml: boolean;
-  richData?: ParsedRichHtml;
+  externalScripts: string[];
   knowledgeBase: string;
 }
 
@@ -48,6 +46,19 @@ function parseFrontmatter(raw: string): {
   return { metadata, content: match[2].trim() };
 }
 
+function parseExternalScripts(
+  metadata: Record<string, string | string[]>
+): string[] {
+  const raw = metadata.externalScripts;
+  if (!raw) return [];
+  if (Array.isArray(raw)) return raw;
+  try {
+    return JSON.parse(raw as string);
+  } catch {
+    return [];
+  }
+}
+
 function parseSimpleFile(file: string): BlogPost | null {
   const raw = fs.readFileSync(path.join(BLOG_DIR, file), "utf-8");
   const { metadata, content } = parseFrontmatter(raw);
@@ -61,7 +72,7 @@ function parseSimpleFile(file: string): BlogPost | null {
     tags: (metadata.tags as string[]) || [],
     thumbnail: (metadata.thumbnail as string) || "",
     content,
-    isRichHtml: false,
+    externalScripts: parseExternalScripts(metadata),
     knowledgeBase: "",
   };
 }
@@ -69,7 +80,6 @@ function parseSimpleFile(file: string): BlogPost | null {
 function parseFolderPost(slug: string): BlogPost | null {
   const folderPath = path.join(BLOG_DIR, slug);
 
-  // Find main HTML file
   let htmlFile = "";
   for (const candidate of [`${slug}.html`, "index.html"]) {
     if (fs.existsSync(path.join(folderPath, candidate))) {
@@ -82,18 +92,6 @@ function parseFolderPost(slug: string): BlogPost | null {
   const raw = fs.readFileSync(path.join(folderPath, htmlFile), "utf-8");
   const { metadata, content } = parseFrontmatter(raw);
 
-  // Detect if this is a full HTML page
-  const isFullHtml = content.includes("<!DOCTYPE") || content.includes("<html");
-
-  let richData: ParsedRichHtml | undefined;
-  let finalContent = content;
-
-  if (isFullHtml) {
-    richData = parseRichHtml(content);
-    finalContent = richData.bodyContent;
-  }
-
-  // Load knowledge base
   let knowledgeBase = "";
   for (const kbFile of ["makale.md", "makale.txt"]) {
     const kbPath = path.join(folderPath, kbFile);
@@ -103,10 +101,15 @@ function parseFolderPost(slug: string): BlogPost | null {
     }
   }
 
-  // Thumbnail: check for anaresim.jpg or similar
   let thumbnail = (metadata.thumbnail as string) || "";
   if (!thumbnail) {
-    for (const imgFile of ["anaresim.jpg", "anaresim.png", "thumbnail.jpg", "thumbnail.png"]) {
+    for (const imgFile of [
+      "anaresim.jpg",
+      "anaresim.png",
+      "anaresim.webp",
+      "thumbnail.jpg",
+      "thumbnail.png",
+    ]) {
       if (fs.existsSync(path.join(folderPath, imgFile))) {
         thumbnail = `/api/blog-assets/${slug}/${imgFile}`;
         break;
@@ -121,9 +124,8 @@ function parseFolderPost(slug: string): BlogPost | null {
     summary: (metadata.summary as string) || "",
     tags: (metadata.tags as string[]) || [],
     thumbnail,
-    content: finalContent,
-    isRichHtml: isFullHtml,
-    richData,
+    content,
+    externalScripts: parseExternalScripts(metadata),
     knowledgeBase,
   };
 }
@@ -148,13 +150,11 @@ export function getAllPosts(): BlogPost[] {
 }
 
 export function getPostBySlug(slug: string): BlogPost | null {
-  // Check folder first
   const folderPath = path.join(BLOG_DIR, slug);
   if (fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory()) {
     return parseFolderPost(slug);
   }
 
-  // Check single files
   for (const ext of [".html", ".md"]) {
     const filePath = path.join(BLOG_DIR, `${slug}${ext}`);
     if (fs.existsSync(filePath)) {

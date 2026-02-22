@@ -3,48 +3,24 @@ title: "Lojistikte Dijital Dönüşüm: Neden Yazılım?"
 date: "2026-02-22"
 summary: "Küresel lojistik pazarının 11,23 trilyon dolarlık devasa hacminde yazılımın stratejik rolü, manuel süreçlerin gizli maliyetleri ve AI destekli dijital dönüşüm."
 tags: ["lojistik", "yazılım", "yapay-zeka"]
+externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/plotly-2.27.0.min.js"]
 ---
-<!DOCTYPE html>
-<html lang="tr" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lojistikte Neden Yazılım? | Bilimsel ve Görsel Analiz</title>
-    
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Lora:ital,wght@0,700;1,400&family=Bangers&display=swap" rel="stylesheet">
-
-    <!-- Chosen Palette: Deep Forest Green, Neon Green, and Neon Orange -->
-    <!-- Application Structure Plan: 
-        1. Intellectual Entry: Setting the stage with 'Information Entropy'.
-        2. Cartoon 1: Visualizing the "Paper Overload" vs "Digital Tablet".
-        3. Simulation: The Race between manual and automated flow.
-        4. Cartoon 2: The "Telephone Game" in logistics communications.
-        5. Theoretical Depth: Bullwhip Effect and Coordination.
-        6. Interaction: Radar Chart for system performance.
-        7. Gemini AI Feature: ✨ Interactive AI Logistics Consultant for custom scenarios.
-        8. Economic Synthesis: ROI projection with Plotly.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
-    <style>
-        :root {
-            --bg-dark: #0a2f29;
-            --bg-panel: #113a33;
-            --text-light: #ecfdf5;
-            --accent-green: #22c55e;
-            --accent-orange: #f97316;
+<style>
+:root {
+            --bg-dark: #f8fafc;
+            --bg-panel: #ffffff;
+            --text-light: #1f2937;
+            --accent-green: #0f766e;
+            --accent-orange: #f59e0b;
         }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
+            font-family: var(--font-sans), system-ui, sans-serif;
+            background-color: transparent;
             color: var(--text-light);
             line-height: 1.8;
         }
-        h1, h2 { font-family: 'Lora', serif; }
-        .comic-font { font-family: 'Bangers', cursive; letter-spacing: 0.05em; }
+        h1, h2 { font-family: var(--font-sans), system-ui, sans-serif; }
+        .comic-font { font-family: var(--font-sans), system-ui, sans-serif; letter-spacing: 0.05em; }
         .highlight-green { color: var(--accent-green); font-weight: 700; }
         
         .article-container { max-width: 800px; margin: 0 auto; padding: 4rem 1.5rem; }
@@ -53,7 +29,7 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
         .cartoon-panel {
             background-color: var(--bg-panel);
             border: 3px solid var(--accent-green);
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             border-radius: 8px;
             overflow: hidden;
             margin: 3rem 0;
@@ -74,7 +50,7 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
             align-items: center;
             padding: 2.5rem;
             min-height: 200px;
-            background-image: radial-gradient(rgba(34, 197, 94, 0.1) 1px, transparent 1px);
+            background-image: radial-gradient(rgba(15, 118, 110, 0.1) 1px, transparent 1px);
             background-size: 20px 20px;
         }
         .speech-bubble {
@@ -109,7 +85,7 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
             padding: 2rem;
             margin: 2.5rem 0;
             height: 400px;
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
         
         .interactive-btn {
@@ -125,7 +101,7 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
             background: transparent;
             color: var(--accent-green);
             border-color: var(--accent-green);
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
 
         /* AI Section Styles */
@@ -136,7 +112,7 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
             padding: 2.5rem;
             margin: 4rem 0;
             border: 2px solid var(--accent-green);
-            box-shadow: 0 0 30px rgba(34, 197, 94, 0.15);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
         .loading-dots:after {
             content: ' .';
@@ -148,14 +124,12 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
             60% { content: ' ...'; }
             80%, 100% { content: ''; }
         }
-    </style>
-</head>
-<body>
+</style>
 
-    <article class="article-container">
+<article class="article-container">
         <!-- Header -->
-        <header class="mb-16 border-b border-neon-green/30 pb-10">
-            <h1 class="text-4xl md:text-6xl font-black mb-8 leading-tight text-neon-green">
+        <header class="mb-16 border-b border-primary/30 pb-10">
+            <h1 class="text-4xl md:text-6xl font-black mb-8 leading-tight text-primary">
                 Lojistikte Paradigma Dönüşümü: Neden Yazılım?
             </h1>
             <p class="text-xl font-medium">
@@ -170,69 +144,69 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
                 <div class="flex flex-col items-center">
                     <div class="speech-bubble mb-4">"Aradığınız irsaliye bu yığının en altında olmalı!"</div>
                     <div class="text-6xl">🏢📄🏃‍♂️</div>
-                    <div class="font-bold mt-2 text-neon-orange">Manuel Kaos</div>
+                    <div class="font-bold mt-2 text-accent">Manuel Kaos</div>
                 </div>
-                <div class="text-5xl font-black comic-font text-neon-green/50 italic px-4">VS</div>
+                <div class="text-5xl font-black comic-font text-primary/50 italic px-4">VS</div>
                 <div class="flex flex-col items-center">
                     <div class="speech-bubble mb-4">"Tek tıkla tüm arşivi taradım, işte burada."</div>
                     <div class="text-6xl">🤖📱✨</div>
-                    <div class="font-bold mt-2 text-neon-green">Yazılım Disiplini</div>
+                    <div class="font-bold mt-2 text-primary">Yazılım Disiplini</div>
                 </div>
             </div>
         </div>
 
         <section class="mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-neon-green">Enformasyon Gecikmesi ve Karar Kalitesi</h2>
+            <h2 class="text-3xl font-bold mb-6 text-primary">Enformasyon Gecikmesi ve Karar Kalitesi</h2>
             <p class="mb-6">
                 Manuel sistemlerde bilgi; telefon görüşmeleri, e-posta trafiği ve Excel tabloları arasında parçalı bir şekilde akar. Bu durum, bilginin kaynaktan hedefe ulaşana kadar her durakta deforme olmasına yol açar. Aşağıdaki simülasyon, verinin manuel aktarımı ile yazılım tabanlı bir merkez arasındaki hız farkını göstermektedir:
             </p>
 
             <!-- Interaction: Speed Race -->
-            <div class="bg-dark-panel rounded-2xl p-8 border border-neon-green/30 mb-12">
+            <div class="bg-card rounded-2xl p-8 border border-primary/30 mb-12">
                 <div class="space-y-8">
                     <div>
-                        <div class="flex justify-between text-xs font-bold mb-2 uppercase text-neon-orange/80">Manuel Zincir (Telefon/Excel)</div>
-                        <div class="w-full bg-dark-bg rounded-full h-4 overflow-hidden border border-neon-orange/20">
-                            <div id="m-bar" class="bg-neon-orange h-full w-0 transition-all duration-[4500ms] shadow-[0_0_10px_rgba(249,115,22,0.5)]"></div>
+                        <div class="flex justify-between text-xs font-bold mb-2 uppercase text-accent/80">Manuel Zincir (Telefon/Excel)</div>
+                        <div class="w-full bg-surface rounded-full h-4 overflow-hidden border border-accent/20">
+                            <div id="m-bar" class="bg-accent h-full w-0 transition-all duration-[4500ms] shadow-sm"></div>
                         </div>
                     </div>
                     <div>
-                        <div class="flex justify-between text-xs font-bold mb-2 uppercase text-neon-green/80">Dijital Ekosistem (Anlık Veri)</div>
-                        <div class="w-full bg-dark-bg rounded-full h-4 overflow-hidden border border-neon-green/20">
-                            <div id="d-bar" class="bg-neon-green h-full w-0 transition-all duration-[800ms] shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
+                        <div class="flex justify-between text-xs font-bold mb-2 uppercase text-primary/80">Dijital Ekosistem (Anlık Veri)</div>
+                        <div class="w-full bg-surface rounded-full h-4 overflow-hidden border border-primary/20">
+                            <div id="d-bar" class="bg-primary h-full w-0 transition-all duration-[800ms] shadow-sm"></div>
                         </div>
                     </div>
                 </div>
                 <div class="mt-8 text-center">
                     <button id="race-btn" class="interactive-btn">Yarışı Başlat</button>
-                    <p id="race-status" class="mt-4 text-sm italic text-neon-green opacity-0">İşleniyor...</p>
+                    <p id="race-status" class="mt-4 text-sm italic text-primary opacity-0">İşleniyor...</p>
                 </div>
             </div>
         </section>
 
         <!-- Cartoon 2: The Telephone Game -->
         <div class="cartoon-panel">
-            <div class="cartoon-header !bg-neon-orange !color-dark-bg">Karikatür #2: "Kamyon Nerede?" Paradoksu</div>
+            <div class="cartoon-header !bg-accent !text-surface">Karikatür #2: "Kamyon Nerede?" Paradoksu</div>
             <div class="cartoon-content">
                 <div class="flex items-center space-x-2">
                     <div class="text-4xl">👨‍💼📞</div>
-                    <div class="speech-bubble !border-neon-orange">"Kamyon nerede?"</div>
+                    <div class="speech-bubble !border-accent">"Kamyon nerede?"</div>
                 </div>
-                <div class="text-3xl text-neon-orange">➡️</div>
+                <div class="text-3xl text-accent">➡️</div>
                 <div class="flex items-center space-x-2">
                     <div class="text-4xl">👩‍💻📞</div>
-                    <div class="speech-bubble !border-neon-orange">"Şoföre ulaşılamıyor!"</div>
+                    <div class="speech-bubble !border-accent">"Şoföre ulaşılamıyor!"</div>
                 </div>
-                <div class="text-3xl text-neon-orange">➡️</div>
+                <div class="text-3xl text-accent">➡️</div>
                 <div class="flex items-center space-x-2">
                     <div class="text-4xl">🚛🏖️</div>
-                    <div class="speech-bubble !border-neon-orange">"Yanlış rotadayım ama manzara güzel!"</div>
+                    <div class="speech-bubble !border-accent">"Yanlış rotadayım ama manzara güzel!"</div>
                 </div>
             </div>
         </div>
 
         <section class="mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-neon-green">Kamçı Etkisi ve Algoritmik Koordinasyon</h2>
+            <h2 class="text-3xl font-bold mb-6 text-primary">Kamçı Etkisi ve Algoritmik Koordinasyon</h2>
             <p class="mb-6">
                 Tedarik zinciri literatüründe <span class="highlight-green">Kamçı Etkisi (Bullwhip Effect)</span>, talebe ilişkin küçük dalgalanmaların, zincirin yukarılarına doğru gidildikçe artan bir belirsizlik yaratmasıdır. Manuel sistemlerde bu belirsizlik, her halkadaki aktörün "güvenlik payı" eklemesiyle stok maliyetlerini geometrik olarak artırır.
             </p>
@@ -244,8 +218,8 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
             <div class="chart-box">
                 <canvas id="radarChart"></canvas>
                 <div class="flex justify-center space-x-6 mt-8">
-                    <button onclick="updateRadar('manual')" class="text-sm font-bold border-b-2 border-transparent hover:border-neon-orange pb-1 text-neon-orange/70 hover:text-neon-orange transition">Manuel Limitler</button>
-                    <button onclick="updateRadar('software')" class="text-sm font-bold border-b-2 border-transparent hover:border-neon-green pb-1 text-neon-green transition">Yazılım Gücü</button>
+                    <button onclick="updateRadar('manual')" class="text-sm font-bold border-b-2 border-transparent hover:border-accent pb-1 text-accent/70 hover:text-accent transition">Manuel Limitler</button>
+                    <button onclick="updateRadar('software')" class="text-sm font-bold border-b-2 border-transparent hover:border-primary pb-1 text-primary transition">Yazılım Gücü</button>
                 </div>
             </div>
         </section>
@@ -257,19 +231,19 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
                 <div class="flex flex-col items-center">
                     <div class="speech-bubble mb-4">"Yazılım çok pahalı, Excel bedava!"</div>
                     <div class="text-6xl">💸📉😭</div>
-                    <div class="font-bold mt-2 text-neon-orange">Masraf Odaklı Bakış</div>
+                    <div class="font-bold mt-2 text-accent">Masraf Odaklı Bakış</div>
                 </div>
-                <div class="text-5xl font-black text-neon-green">⚡</div>
+                <div class="text-5xl font-black text-primary">⚡</div>
                 <div class="flex flex-col items-center">
                     <div class="speech-bubble mb-4">"Hatalar bitti, tasarruf kâra dönüştü."</div>
                     <div class="text-6xl">💰📈😎</div>
-                    <div class="font-bold mt-2 text-neon-green">Yatırım Odaklı Bakış</div>
+                    <div class="font-bold mt-2 text-primary">Yatırım Odaklı Bakış</div>
                 </div>
             </div>
         </div>
 
         <section class="mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-neon-green">Ekonomik Sentez: ROI Projeksiyonu</h2>
+            <h2 class="text-3xl font-bold mb-6 text-primary">Ekonomik Sentez: ROI Projeksiyonu</h2>
             <p class="mb-6">
                 İşletmeler yazılımı genellikle bir maliyet kalemi olarak görür. Oysa yazılım tabanlı sistemler, operasyonel hataları minimize ederek <span class="italic">"görünmez maliyetleri"</span> ortadan kaldırır. Hatalı sevkiyat, yanlış stok verisi ve verimsiz rota nedeniyle kaybedilen her kuruş, yazılımın kendini amorti etme süresini kısaltır.
             </p>
@@ -280,30 +254,30 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
         </section>
 
         <!-- Footer -->
-        <footer class="mt-20 pt-10 border-t border-neon-green/30 text-center">
-            <p class="text-neon-green/70 italic">
+        <footer class="mt-20 pt-10 border-t border-primary/30 text-center">
+            <p class="text-primary/70 italic">
                 Lojistikte gelecek, fiziksel güçte değil, kodun lojik yapısındadır. <br>
                 Geleceği manuel yönetemezsiniz.
             </p>
         </footer>
     </article>
 
-    <script>
-        // --- Data and State for Charts ---
+<script data-blog-script>
+// --- Data and State for Charts ---
         const configs = {
             manual: {
                 label: 'Manuel Süreç Performansı',
                 data: [30, 80, 75, 20, 30],
-                color: 'rgba(249, 115, 22, 0.5)', // Neon Orange
-                border: '#f97316',
-                pointColor: '#f97316'
+                color: 'rgba(245, 158, 11, 0.5)', // Neon Orange
+                border: '#f59e0b',
+                pointColor: '#f59e0b'
             },
             software: {
                 label: 'Yazılım Destekli Performans',
                 data: [98, 30, 05, 95, 90],
-                color: 'rgba(34, 197, 94, 0.5)', // Neon Green
-                border: '#22c55e',
-                pointColor: '#22c55e'
+                color: 'rgba(15, 118, 110, 0.5)', // Neon Green
+                border: '#0f766e',
+                pointColor: '#0f766e'
             }
         };
 
@@ -337,8 +311,8 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
 
         // --- RADAR CHART LOGIC ---
         function initRadar() {
-            Chart.defaults.color = '#ecfdf5';
-            Chart.defaults.borderColor = 'rgba(34, 197, 94, 0.2)';
+            Chart.defaults.color = '#1f2937';
+            Chart.defaults.borderColor = 'rgba(15, 118, 110, 0.2)';
             const ctx = document.getElementById('radarChart').getContext('2d');
             radarChart = new Chart(ctx, {
                 type: 'radar',
@@ -351,12 +325,12 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
                     scales: {
                         r: {
                             suggestedMin: 0, suggestedMax: 100, ticks: { display: false, backdropColor: 'transparent' },
-                            grid: { color: 'rgba(34, 197, 94, 0.1)' },
-                            angleLines: { color: 'rgba(34, 197, 94, 0.2)' },
-                            pointLabels: { font: { size: 12, weight: 'bold' }, color: '#ecfdf5' }
+                            grid: { color: 'rgba(15, 118, 110, 0.1)' },
+                            angleLines: { color: 'rgba(15, 118, 110, 0.2)' },
+                            pointLabels: { font: { size: 12, weight: 'bold' }, color: '#1f2937' }
                         }
                     },
-                    plugins: { legend: { position: 'top', labels: { font: { weight: 'bold' }, color: '#ecfdf5' } } }
+                    plugins: { legend: { position: 'top', labels: { font: { weight: 'bold' }, color: '#1f2937' } } }
                 }
             });
         }
@@ -384,27 +358,25 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
 
             const trace1 = {
                 x: months, y: manualCosts, name: 'Manuel Operasyon Kayıpları',
-                type: 'scatter', mode: 'lines', line: {color: '#f97316', width: 2, dash: 'dot'}
+                type: 'scatter', mode: 'lines', line: {color: '#f59e0b', width: 2, dash: 'dot'}
             };
             const trace2 = {
                 x: months, y: softwareSavings, name: 'Kümülatif Yazılım Tasarrufu',
-                fill: 'tozeroy', type: 'scatter', mode: 'lines', line: {color: '#22c55e', width: 4},
-                fillcolor: 'rgba(34, 197, 94, 0.2)'
+                fill: 'tozeroy', type: 'scatter', mode: 'lines', line: {color: '#0f766e', width: 4},
+                fillcolor: 'rgba(15, 118, 110, 0.2)'
             };
 
             const layout = {
                 margin: { t: 20, b: 40, l: 40, r: 20 },
                 showlegend: true,
-                legend: { orientation: 'h', y: -0.2, font: { color: '#ecfdf5' } },
-                font: { family: 'Inter', size: 10, color: '#ecfdf5' },
-                xaxis: { showgrid: false, color: '#ecfdf5' },
-                yaxis: { title: 'Verimlilik Skoru', gridcolor: 'rgba(34, 197, 94, 0.1)', color: '#ecfdf5' },
+                legend: { orientation: 'h', y: -0.2, font: { color: '#1f2937' } },
+                font: { family: 'Inter', size: 10, color: '#1f2937' },
+                xaxis: { showgrid: false, color: '#1f2937' },
+                yaxis: { title: 'Verimlilik Skoru', gridcolor: 'rgba(15, 118, 110, 0.1)', color: '#1f2937' },
                 paper_bgcolor: 'rgba(0,0,0,0)',
                 plot_bgcolor: 'rgba(0,0,0,0)'
             };
 
             Plotly.newPlot('roiPlot', [trace1, trace2], layout, {responsive: true, displayModeBar: false});
         }
-    </script>
-</body>
-</html>
+</script>
