@@ -6,20 +6,17 @@ tags: ["lojistik", "yazılım", "yapay-zeka"]
 externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/plotly-2.27.0.min.js"]
 ---
 <style>
-:root {
+.blog-article {
             --bg-dark: #111827;
             --bg-panel: #1f2937;
             --text-light: #e5e7eb;
             --accent-green: #14b8a6;
             --accent-orange: #f59e0b;
-        }
-        body {
             font-family: var(--font-sans), system-ui, sans-serif;
-            background-color: transparent;
             color: var(--text-light);
             line-height: 1.8;
         }
-        h1, h2 { font-family: var(--font-sans), system-ui, sans-serif; }
+        .blog-article h1, .blog-article h2 { font-family: var(--font-sans), system-ui, sans-serif; }
         .comic-font { font-family: var(--font-sans), system-ui, sans-serif; letter-spacing: 0.05em; }
         .highlight-green { color: var(--accent-green); font-weight: 700; }
         
@@ -126,6 +123,7 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
         }
 </style>
 
+<div class="blog-article">
 <article class="article-container">
         <!-- Header -->
         <header class="mb-16 border-b border-primary/30 pb-10">
@@ -380,3 +378,4 @@ externalScripts: ["https://cdn.jsdelivr.net/npm/chart.js","https://cdn.plot.ly/p
             Plotly.newPlot('roiPlot', [trace1, trace2], layout, {responsive: true, displayModeBar: false});
         }
 </script>
+</div>

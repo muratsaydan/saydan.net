@@ -212,16 +212,9 @@ export function transformHtml(rawHtml: string): TransformResult {
   styles = cleanFonts(styles);
   styles = softenGlows(styles);
 
-  // Body background inherits from site
-  styles = styles.replace(
-    /background-color:\s*var\(--bg-dark\)\s*;/gi,
-    "background-color: transparent;"
-  );
-  // White backgrounds in body rule → transparent
-  styles = styles.replace(
-    /body\s*\{[^}]*\}/gi,
-    (match) => match.replace(/background-color:\s*#(?:fff(?:fff)?|f8fafc)\s*;/gi, "background-color: transparent;")
-  );
+  // Scope global selectors to .blog-article container
+  styles = styles.replace(/\b:root\b/g, ".blog-article");
+  styles = styles.replace(/\bbody\b(?=\s*\{)/g, ".blog-article");
 
   // Transform body HTML
   body = applyTailwindClassMap(body);
@@ -238,7 +231,7 @@ export function transformHtml(rawHtml: string): TransformResult {
     finalHtml += `<style>\n${styles.trim()}\n</style>\n\n`;
   }
 
-  finalHtml += body.trim();
+  finalHtml += `<div class="blog-article">\n${body.trim()}\n</div>`;
 
   if (inlineScript.trim()) {
     finalHtml += `\n\n<script data-blog-script>\n${inlineScript.trim()}\n</script>`;
