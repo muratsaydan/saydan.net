@@ -87,14 +87,19 @@ export default function NewBlogPage() {
       });
 
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Dönüştürme hatası");
+        const contentType = res.headers.get("content-type") || "";
+        if (contentType.includes("application/json")) {
+          const data = await res.json();
+          throw new Error(data.error || "Dönüştürme hatası");
+        }
+        throw new Error(`Sunucu hatası (${res.status})`);
       }
 
       const data = await res.json();
       setTransformedHtml(data.transformedHtml);
       setExternalScripts(data.externalScripts || []);
       if (data.detectedTitle && !title) setTitle(data.detectedTitle);
+      if (data.detectedSummary && !summary) setSummary(data.detectedSummary);
       if (data.suggestedSlug && !slug) setSlug(data.suggestedSlug);
       setStep(2);
     } catch (e) {
@@ -146,8 +151,17 @@ export default function NewBlogPage() {
       });
 
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Yayınlama hatası");
+        const contentType = res.headers.get("content-type") || "";
+        if (contentType.includes("application/json")) {
+          const data = await res.json();
+          throw new Error(data.error || "Yayınlama hatası");
+        }
+        throw new Error(`Sunucu hatası (${res.status})`);
+      }
+
+      const result = await res.json();
+      if (!result.success) {
+        throw new Error(result.error || "Yayınlama hatası");
       }
 
       setPublishSuccess(true);

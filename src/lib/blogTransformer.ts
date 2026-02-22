@@ -2,6 +2,7 @@ export interface TransformResult {
   html: string;
   externalScripts: string[];
   detectedTitle: string;
+  detectedSummary: string;
 }
 
 const HEX_MAP: [RegExp, string][] = [
@@ -105,9 +106,28 @@ function applyTailwindClassMap(html: string): string {
 
 function extractTitle(html: string): string {
   const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
-  if (titleMatch) return titleMatch[1].trim();
+  if (titleMatch) return titleMatch[1].trim().split("|")[0].trim();
   const h1Match = html.match(/<h1[^>]*>([^<]+)<\/h1>/i);
   if (h1Match) return h1Match[1].trim();
+  return "";
+}
+
+function extractSummary(html: string): string {
+  const metaMatch = html.match(
+    /<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i
+  );
+  if (metaMatch) return metaMatch[1].trim();
+
+  const firstP = html.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+  if (firstP) {
+    const text = firstP[1]
+      .replace(/<[^>]+>/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (text.length > 20) {
+      return text.length > 200 ? text.slice(0, 197) + "..." : text;
+    }
+  }
   return "";
 }
 
@@ -143,6 +163,7 @@ function removeAiScriptCode(script: string): string {
 
 export function transformHtml(rawHtml: string): TransformResult {
   const detectedTitle = extractTitle(rawHtml);
+  const detectedSummary = extractSummary(rawHtml);
   const externalScripts = extractExternalScripts(rawHtml);
 
   // Extract style blocks
@@ -207,7 +228,7 @@ export function transformHtml(rawHtml: string): TransformResult {
     finalHtml += `\n\n<script data-blog-script>\n${inlineScript.trim()}\n</script>`;
   }
 
-  return { html: finalHtml, externalScripts, detectedTitle };
+  return { html: finalHtml, externalScripts, detectedTitle, detectedSummary };
 }
 
 export function generateSlug(title: string): string {

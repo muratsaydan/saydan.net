@@ -20,6 +20,7 @@ export async function POST(req: Request) {
     transformedHtml: result.html,
     externalScripts: result.externalScripts,
     detectedTitle: result.detectedTitle,
+    detectedSummary: result.detectedSummary,
     suggestedSlug,
   });
 }

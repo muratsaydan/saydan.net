@@ -40,7 +40,14 @@ export async function POST(req: Request) {
           .join(", ")
       : "";
 
-    const scriptList = externalScripts ? JSON.parse(externalScripts) : [];
+    let scriptList: string[] = [];
+    if (externalScripts) {
+      try {
+        scriptList = JSON.parse(externalScripts);
+      } catch {
+        scriptList = [];
+      }
+    }
     const scriptLine =
       scriptList.length > 0
         ? `externalScripts: ${JSON.stringify(scriptList)}\n`
@@ -98,9 +105,12 @@ ${scriptLine}---
       );
     }
 
-    // Revalidate blog pages
-    revalidatePath("/blog");
-    revalidatePath(`/blog/${slug}`);
+    try {
+      revalidatePath("/blog");
+      revalidatePath(`/blog/${slug}`);
+    } catch {
+      // revalidation may fail in dev, ignore
+    }
 
     return Response.json({ success: true, slug });
   } catch (e) {
