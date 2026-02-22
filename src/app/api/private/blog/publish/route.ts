@@ -7,6 +7,20 @@ import sharp from "sharp";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
+const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"];
+
+function rewriteAssetPaths(html: string, slug: string, assetNames: string[]): string {
+  for (const name of assetNames) {
+    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp(
+      `(src|poster)(=["'])(?:[^"']*\\/)?${escaped}(["'])`,
+      "gi"
+    );
+    html = html.replace(re, `$1$2/api/blog-assets/${slug}/${name}$3`);
+  }
+  return html;
+}
+
 export async function POST(req: Request) {
   const session = await auth();
   if (!ALLOWED_EMAILS.includes(session?.user?.email ?? "")) {
@@ -19,11 +33,12 @@ export async function POST(req: Request) {
   const date = formData.get("date") as string;
   const summary = formData.get("summary") as string;
   const tags = formData.get("tags") as string;
-  const transformedHtml = formData.get("transformedHtml") as string;
+  let transformedHtml = formData.get("transformedHtml") as string;
   const externalScripts = formData.get("externalScripts") as string;
   const thumbnail = formData.get("thumbnail") as File | null;
   const knowledgeBase = formData.get("knowledgeBase") as File | null;
   const knowledgeBaseText = formData.get("knowledgeBaseText") as string | null;
+  const assets = formData.getAll("assets") as File[];
 
   if (!slug || !title || !transformedHtml) {
     return Response.json({ error: "Eksik alanlar" }, { status: 400 });
@@ -32,6 +47,33 @@ export async function POST(req: Request) {
   try {
     const postDir = path.join(BLOG_DIR, slug);
     fs.mkdirSync(postDir, { recursive: true });
+
+    // Save and optimize asset files
+    const savedAssetNames: string[] = [];
+    for (const asset of assets) {
+      if (!asset.name || asset.size === 0) continue;
+      const safeName = asset.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const ext = path.extname(safeName).toLowerCase();
+      const rawBuffer = Buffer.from(await asset.arrayBuffer());
+
+      if (IMAGE_EXTENSIONS.includes(ext) && ext !== ".svg" && ext !== ".gif") {
+        const optimized = await sharp(rawBuffer)
+          .resize({ width: 1400, withoutEnlargement: true })
+          .jpeg({ quality: 82 })
+          .toBuffer();
+        const jpgName = safeName.replace(/\.[^.]+$/, ".jpg");
+        fs.writeFileSync(path.join(postDir, jpgName), optimized);
+        savedAssetNames.push(jpgName);
+      } else {
+        fs.writeFileSync(path.join(postDir, safeName), rawBuffer);
+        savedAssetNames.push(safeName);
+      }
+    }
+
+    // Rewrite relative asset paths in HTML to absolute /api/blog-assets/slug/... paths
+    if (savedAssetNames.length > 0) {
+      transformedHtml = rewriteAssetPaths(transformedHtml, slug, savedAssetNames);
+    }
 
     // Build frontmatter
     const tagList = tags

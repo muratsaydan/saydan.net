@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef, useCallback, type DragEvent } from "react";
+import { useState, useRef, useCallback, useMemo, type DragEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import JSZip from "jszip";
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -16,12 +17,20 @@ const AVAILABLE_TAGS = [
   "saas",
 ];
 
+const ASSET_EXTENSIONS = [
+  ".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg",
+  ".mp4", ".webm",
+];
+
 export default function NewBlogPage() {
   const router = useRouter();
   const [step, setStep] = useState<Step>(1);
 
   // Step 1 state
-  const [htmlFile, setHtmlFile] = useState<File | null>(null);
+  const [zipFile, setZipFile] = useState<File | null>(null);
+  const [htmlContent, setHtmlContent] = useState<string>("");
+  const [assetFiles, setAssetFiles] = useState<Map<string, File>>(new Map());
+  const [zipInfo, setZipInfo] = useState<string>("");
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [kbFile, setKbFile] = useState<File | null>(null);
 
@@ -41,11 +50,33 @@ export default function NewBlogPage() {
   const [error, setError] = useState("");
   const [publishSuccess, setPublishSuccess] = useState(false);
 
-  const htmlInputRef = useRef<HTMLInputElement>(null);
+  const zipInputRef = useRef<HTMLInputElement>(null);
   const thumbInputRef = useRef<HTMLInputElement>(null);
   const kbInputRef = useRef<HTMLInputElement>(null);
 
-  const handleDrop = useCallback(
+  // Blob URLs for preview images
+  const blobUrlMap = useMemo(() => {
+    const map = new Map<string, string>();
+    assetFiles.forEach((file, name) => {
+      map.set(name, URL.createObjectURL(file));
+    });
+    return map;
+  }, [assetFiles]);
+
+  const previewHtml = useMemo(() => {
+    if (!transformedHtml || blobUrlMap.size === 0) return transformedHtml;
+    let html = transformedHtml;
+    blobUrlMap.forEach((blobUrl, filename) => {
+      const escaped = filename.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      html = html.replace(
+        new RegExp(`(src|poster)=["'](?:[^"']*\\/)?${escaped}["']`, "gi"),
+        `$1="${blobUrl}"`
+      );
+    });
+    return html;
+  }, [transformedHtml, blobUrlMap]);
+
+  const handleFileDrop = useCallback(
     (
       e: DragEvent,
       setter: (f: File | null) => void,
@@ -69,21 +100,72 @@ export default function NewBlogPage() {
     e.currentTarget.classList.remove("border-primary", "bg-primary/5");
   };
 
-  // Step 1 → 2: read HTML, detect title, generate slug
+  const extractZip = async (file: File) => {
+    setZipFile(file);
+    setError("");
+    setZipInfo("");
+    setHtmlContent("");
+    setAssetFiles(new Map());
+
+    try {
+      const zip = await JSZip.loadAsync(file);
+      let foundHtml = "";
+      const assets = new Map<string, File>();
+      let htmlCount = 0;
+      let assetCount = 0;
+
+      for (const [relativePath, zipEntry] of Object.entries(zip.files)) {
+        if (zipEntry.dir) continue;
+        const fileName = relativePath.split("/").pop() || relativePath;
+        const ext = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();
+
+        if ((ext === ".html" || ext === ".htm") && !foundHtml) {
+          foundHtml = await zipEntry.async("string");
+          htmlCount++;
+        } else if (ASSET_EXTENSIONS.includes(ext)) {
+          const blob = await zipEntry.async("blob");
+          assets.set(fileName, new File([blob], fileName, { type: blob.type || `image/${ext.slice(1)}` }));
+          assetCount++;
+        }
+      }
+
+      if (!foundHtml) {
+        setError("ZIP dosyasında HTML bulunamadı.");
+        setZipFile(null);
+        return;
+      }
+
+      setHtmlContent(foundHtml);
+      setAssetFiles(assets);
+      setZipInfo(`${htmlCount} HTML, ${assetCount} görsel/video bulundu`);
+    } catch {
+      setError("ZIP dosyası okunamadı.");
+      setZipFile(null);
+    }
+  };
+
+  const handleZipDrop = useCallback((e: DragEvent) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file && file.name.toLowerCase().endsWith(".zip")) {
+      extractZip(file);
+    }
+  }, []);
+
+  // Step 1 → 2: transform HTML, detect title, generate slug
   const proceedToMetadata = async () => {
-    if (!htmlFile) {
-      setError("HTML dosyası gerekli.");
+    if (!htmlContent) {
+      setError("ZIP dosyası yükleyin (HTML içermeli).");
       return;
     }
     setIsLoading(true);
     setError("");
 
     try {
-      const rawHtml = await htmlFile.text();
       const res = await fetch("/api/private/blog/transform", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rawHtml }),
+        body: JSON.stringify({ rawHtml: htmlContent }),
       });
 
       if (!res.ok) {
@@ -144,6 +226,9 @@ export default function NewBlogPage() {
       if (kbFile) {
         formData.append("knowledgeBase", kbFile);
       }
+      assetFiles.forEach((file) => {
+        formData.append("assets", file, file.name);
+      });
 
       const res = await fetch("/api/private/blog/publish", {
         method: "POST",
@@ -268,22 +353,79 @@ export default function NewBlogPage() {
         <div className="space-y-6">
           <h2 className="text-lg font-semibold">Dosyaları Yükleyin</h2>
 
-          {/* HTML */}
-          <DropZone
-            label="HTML Dosyası"
-            sublabel="Gemini'den gelen makale çıktısı (.html)"
-            file={htmlFile}
-            inputRef={htmlInputRef}
-            accept=".html,.htm"
-            required
-            onDrop={(e) => handleDrop(e, setHtmlFile, [".html", ".htm"])}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onChange={(e) =>
-              setHtmlFile(e.target.files?.[0] ?? null)
-            }
-            onClear={() => setHtmlFile(null)}
-          />
+          {/* ZIP Content Package */}
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
+              İçerik Paketi <span className="text-red-500">*</span>
+            </label>
+            <div
+              onDrop={handleZipDrop}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onClick={() => zipInputRef.current?.click()}
+              className="cursor-pointer rounded-xl border-2 border-dashed border-border p-6 text-center transition-colors hover:border-primary/50 dark:border-border-dark"
+            >
+              {zipFile ? (
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center gap-3">
+                    <svg className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                      {zipFile.name}
+                    </span>
+                    <span className="text-xs text-muted">
+                      ({(zipFile.size / 1024).toFixed(0)} KB)
+                    </span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setZipFile(null);
+                        setHtmlContent("");
+                        setAssetFiles(new Map());
+                        setZipInfo("");
+                      }}
+                      className="ml-2 text-xs text-red-500 hover:text-red-700"
+                    >
+                      Kaldır
+                    </button>
+                  </div>
+                  {zipInfo && (
+                    <p className="text-xs text-primary">{zipInfo}</p>
+                  )}
+                  {assetFiles.size > 0 && (
+                    <div className="flex flex-wrap justify-center gap-1.5 pt-1">
+                      {Array.from(assetFiles.keys()).map((name) => (
+                        <span key={name} className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
+                          {name}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div>
+                  <svg className="mx-auto mb-2 h-8 w-8 text-muted/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                  </svg>
+                  <p className="text-sm text-muted">HTML + görseller/videolar içeren ZIP paketi (.zip)</p>
+                  <p className="mt-1 text-xs text-muted/60">
+                    Sürükle-bırak veya tıklayarak seç
+                  </p>
+                </div>
+              )}
+              <input
+                ref={zipInputRef}
+                type="file"
+                accept=".zip"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) extractZip(f);
+                }}
+                className="hidden"
+              />
+            </div>
+          </div>
 
           {/* Thumbnail */}
           <DropZone
@@ -293,7 +435,7 @@ export default function NewBlogPage() {
             inputRef={thumbInputRef}
             accept=".jpg,.jpeg,.png,.webp"
             onDrop={(e) =>
-              handleDrop(e, setThumbnailFile, [
+              handleFileDrop(e, setThumbnailFile, [
                 ".jpg",
                 ".jpeg",
                 ".png",
@@ -316,7 +458,7 @@ export default function NewBlogPage() {
             inputRef={kbInputRef}
             accept=".pdf,.md,.txt"
             onDrop={(e) =>
-              handleDrop(e, setKbFile, [".pdf", ".md", ".txt"])
+              handleFileDrop(e, setKbFile, [".pdf", ".md", ".txt"])
             }
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -328,7 +470,7 @@ export default function NewBlogPage() {
 
           <button
             onClick={proceedToMetadata}
-            disabled={!htmlFile || isLoading}
+            disabled={!htmlContent || isLoading}
             className="mt-4 flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-primary-dark disabled:opacity-40"
           >
             {isLoading ? (
@@ -497,7 +639,7 @@ export default function NewBlogPage() {
             <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
             {summary && <p className="mt-2 text-muted">{summary}</p>}
             <hr className="my-6 border-border dark:border-border-dark" />
-            <div dangerouslySetInnerHTML={{ __html: transformedHtml }} />
+            <div dangerouslySetInnerHTML={{ __html: previewHtml }} />
           </div>
 
           <div className="flex gap-3 pt-2">
@@ -560,7 +702,10 @@ export default function NewBlogPage() {
             <button
               onClick={() => {
                 setStep(1);
-                setHtmlFile(null);
+                setZipFile(null);
+                setHtmlContent("");
+                setAssetFiles(new Map());
+                setZipInfo("");
                 setThumbnailFile(null);
                 setKbFile(null);
                 setTitle("");
