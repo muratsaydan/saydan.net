@@ -46,13 +46,13 @@ export default function BlogPage() {
               href={`/blog/${post.slug}`}
               className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 dark:border-border-dark dark:bg-card-dark dark:hover:border-primary-light/30"
             >
-              <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface-dark">
+              <div className="relative aspect-[16/9] w-full overflow-hidden bg-card-dark">
                 {post.thumbnail ? (
                   <Image
                     src={post.thumbnail}
                     alt={post.title}
                     fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-contain transition-transform duration-300 group-hover:scale-105"
                     sizes="(max-width: 640px) 100vw, 50vw"
                   />
                 ) : (
