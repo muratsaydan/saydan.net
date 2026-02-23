@@ -59,6 +59,7 @@ export async function POST(req: Request) {
 
       if (IMAGE_EXTENSIONS.includes(ext) && ext !== ".svg" && ext !== ".gif") {
         const optimized = await sharp(rawBuffer)
+          .trim()
           .resize({ width: 1400, withoutEnlargement: true })
           .jpeg({ quality: 82 })
           .toBuffer();
@@ -114,6 +115,7 @@ ${scriptLine}---
       const thumbPath = path.join(postDir, "anaresim.jpg");
       const rawBuffer = Buffer.from(await thumbnail.arrayBuffer());
       const optimized = await sharp(rawBuffer)
+        .trim()
         .resize({ width: 1200, withoutEnlargement: true })
         .jpeg({ quality: 80 })
         .toBuffer();
