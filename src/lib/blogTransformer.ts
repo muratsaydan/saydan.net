@@ -286,7 +286,7 @@ export function transformHtml(rawHtml: string): TransformResult {
   );
   body = body.replace(
     /<img\b(?![^>]*class=)/gi,
-    '<img class="rounded-xl w-full h-auto"'
+    '<img class="rounded-xl h-auto mx-auto max-w-lg"'
   );
 
   // Transform body HTML
