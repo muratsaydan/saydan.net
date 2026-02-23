@@ -110,10 +110,8 @@ function parseFolderPost(slug: string): BlogPost | null {
       "thumbnail.jpg",
       "thumbnail.png",
     ]) {
-      const imgPath = path.join(folderPath, imgFile);
-      if (fs.existsSync(imgPath)) {
-        const mtime = fs.statSync(imgPath).mtimeMs;
-        thumbnail = `/api/blog-assets/${slug}/${imgFile}?v=${Math.floor(mtime / 1000)}`;
+      if (fs.existsSync(path.join(folderPath, imgFile))) {
+        thumbnail = `/api/blog-assets/${slug}/${imgFile}`;
         break;
       }
     }

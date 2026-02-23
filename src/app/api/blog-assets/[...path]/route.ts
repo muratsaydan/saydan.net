@@ -39,7 +39,7 @@ export async function GET(
   return new Response(fileBuffer, {
     headers: {
       "Content-Type": contentType,
-      "Cache-Control": "public, max-age=86400",
+      "Cache-Control": "public, max-age=3600, must-revalidate",
       "ETag": `"${stat.mtimeMs.toString(36)}-${stat.size.toString(36)}"`,
     },
   });
