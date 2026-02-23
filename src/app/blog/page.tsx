@@ -46,7 +46,7 @@ export default function BlogPage() {
               href={`/blog/${post.slug}`}
               className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 dark:border-border-dark dark:bg-card-dark dark:hover:border-primary-light/30"
             >
-              <div className="relative aspect-[16/9] w-full overflow-hidden bg-gradient-to-br from-primary/5 to-accent/10">
+              <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface-dark">
                 {post.thumbnail ? (
                   <Image
                     src={post.thumbnail}
