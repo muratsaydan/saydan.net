@@ -34,11 +34,13 @@ export async function GET(
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME_TYPES[ext] || "application/octet-stream";
 
+  const stat = fs.statSync(filePath);
   const fileBuffer = fs.readFileSync(filePath);
   return new Response(fileBuffer, {
     headers: {
       "Content-Type": contentType,
-      "Cache-Control": "public, max-age=31536000, immutable",
+      "Cache-Control": "public, max-age=86400",
+      "ETag": `"${stat.mtimeMs.toString(36)}-${stat.size.toString(36)}"`,
     },
   });
 }
