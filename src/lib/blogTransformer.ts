@@ -275,6 +275,20 @@ export function transformHtml(rawHtml: string): TransformResult {
   styles = styles.replace(/\b:root\b/g, ".blog-article");
   styles = styles.replace(/\bbody\b(?=\s*\{)/g, ".blog-article");
 
+  // Make images responsive
+  body = body.replace(
+    /<img\b([^>]*?)\s*(?:width|height)=["'][^"']*["']([^>]*?)>/gi,
+    (match, before, after) => {
+      let cleaned = `<img${before}${after}>`;
+      cleaned = cleaned.replace(/\s*(?:width|height)=["'][^"']*["']/gi, "");
+      return cleaned;
+    }
+  );
+  body = body.replace(
+    /<img\b(?![^>]*class=)/gi,
+    '<img class="rounded-xl w-full h-auto"'
+  );
+
   // Transform body HTML
   body = applyTailwindClassMap(body);
   body = applyColorMap(body);
